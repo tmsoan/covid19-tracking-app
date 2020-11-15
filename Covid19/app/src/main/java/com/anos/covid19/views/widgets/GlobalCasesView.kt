@@ -17,6 +17,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.anos.covid19.R
+import com.anos.covid19.model.Global
+import com.anos.covid19.model.GlobalChartItem
+import com.anos.covid19.utils.getIntThousandFormat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
@@ -29,14 +32,16 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.layout_global_cases_view.view.*
 import timber.log.Timber
-import java.util.ArrayList
+import java.util.*
 
 
 class GlobalCasesView : RelativeLayout {
 
     private val parties = arrayOf(
-        "Confirmed", "Recovered", "Death"
+        "Active", "Recovered", "Death"
     )
+
+    private var global: Global? = null
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
         init(attrs)
@@ -56,7 +61,6 @@ class GlobalCasesView : RelativeLayout {
         addView(LayoutInflater.from(context).inflate(R.layout.layout_global_cases_view, null))
 
         initChartLayout()
-        loadChartData(3, 100f)
     }
 
     /**
@@ -65,12 +69,11 @@ class GlobalCasesView : RelativeLayout {
     private fun initChartLayout() {
         chart.setUsePercentValues(true)
         chart.description.isEnabled = false
-//        chart.setExtraOffsets(5f, 5f, 5f, 5f)
 
         chart.dragDecelerationFrictionCoef = 0.95f
 
-//        chart.centerText = generateCenterSpannableText()
-//        chart.setDrawCenterText(true)
+        chart.centerText = generateCenterSpannableText()
+        chart.setDrawCenterText(true)
 
         chart.isDrawHoleEnabled = true
         chart.setHoleColor(Color.WHITE)
@@ -91,8 +94,6 @@ class GlobalCasesView : RelativeLayout {
         // add a selection listener
         chart.setOnChartValueSelectedListener(onChartValueSelectedListener)
 
-        chart.animateY(1400, Easing.EaseInOutQuad)
-
         // disable default legend
         chart.legend.isEnabled = false
     }
@@ -100,19 +101,13 @@ class GlobalCasesView : RelativeLayout {
     /**
      * load chart data
      */
-    private fun loadChartData(count: Int, range: Float) {
+    private fun loadChartData(list: List<GlobalChartItem>) {
         val entries = ArrayList<PieEntry>()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (i in 0 until count) {
-            entries.add(
-                PieEntry(
-                    (Math.random() * range + range / 5).toFloat(),
-                    parties[i % parties.size],
-                    resources.getDrawable(R.drawable.ic_launcher_foreground)
-                )
-            )
+        for (i in list.indices) {
+            entries.add(PieEntry(list[i].value.toFloat(), parties[i % parties.size],0))
         }
 
         val dataSet = PieDataSet(entries, "Election Results")
@@ -123,11 +118,9 @@ class GlobalCasesView : RelativeLayout {
 
         // add a lot of colors
         val colors = ArrayList<Int>()
-        val ta: TypedArray = resources.obtainTypedArray(R.array.pieChartColors)
-        for (i in 0 until ta.length()) {
-            colors.add(ta.getColor(i, 0))
+        for (i in list.indices) {
+            colors.add(resources.getColor(list[i].colorRes))
         }
-
         dataSet.colors = colors
 
         val data = PieData(dataSet)
@@ -139,6 +132,8 @@ class GlobalCasesView : RelativeLayout {
 
         // undo all highlights
         chart.highlightValues(null)
+
+        chart.animateY(1200, Easing.EaseInOutQuad)
 
         chart.invalidate()
     }
@@ -153,29 +148,43 @@ class GlobalCasesView : RelativeLayout {
     }
 
     private fun generateCenterSpannableText(): SpannableString? {
-        val s1 = "Sharpe Ratio"
-        val s2 = "1.96"
-        val s = SpannableString("$s1\n$s2")
-        s.setSpan(RelativeSizeSpan(1.9f), 0, s1.length, 0)
-        s.setSpan(RelativeSizeSpan(3.5f), s1.length + 1, s.length, 0)
+        val s1 = "Total"
+        val s = SpannableString("$s1")
+        s.setSpan(RelativeSizeSpan(2f), 0, s1.length, 0)
         s.setSpan(
             StyleSpan(Typeface.NORMAL),
             0,
             s.length,
             0
         )
-        s.setSpan(
-            StyleSpan(Typeface.BOLD),
-            s1.length + 1,
-            s.length,
-            0
-        )
-        s.setSpan(
-            ForegroundColorSpan(ColorTemplate.getHoloBlue()),
-            s1.length + 1,
-            s.length,
-            0
-        )
         return s
+    }
+
+    fun update(data: Global) {
+        global = data
+        val lstData = ArrayList<GlobalChartItem>()
+        // legend information
+        global?.getActiveCases()?.let {
+            lstData.add(GlobalChartItem("Active", it, R.color.active_color))
+            tv_no_active?.setText(getIntThousandFormat(it))
+        }
+        global?.totalRecovered?.let {
+            lstData.add(GlobalChartItem("Recovered", it, R.color.recovered_color))
+            tv_no_recovered?.setText(getIntThousandFormat(it))
+        }
+        global?.totalDeaths?.let {
+            lstData.add(GlobalChartItem("Death", it, R.color.death_color))
+            tv_no_death?.setText(getIntThousandFormat(it))
+        }
+        global?.newDeaths?.let {
+            tv_no_death_increase?.setText("+${getIntThousandFormat(it)}")
+        }
+        // total
+        global?.totalConfirmed?.let {
+            tv_total_cases?.setText("Total ${getIntThousandFormat(it)}")
+        }
+
+        // update chart
+        loadChartData(lstData)
     }
 }

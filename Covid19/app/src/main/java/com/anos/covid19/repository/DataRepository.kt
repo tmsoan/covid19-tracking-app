@@ -1,6 +1,7 @@
 package com.anos.covid19.repository
 
 import com.anos.covid19.MyApp
+import com.anos.covid19.model.CountryItem
 import com.anos.covid19.model.response.SummaryResponse
 import com.anos.covid19.network.DataResponse
 import com.anos.covid19.network.IAppAPI
@@ -29,6 +30,20 @@ class DataRepository : BaseRepository(), IDataRepository {
             override fun onFailure(call: Call<SummaryResponse>, t: Throwable) {
                 t.printStackTrace()
                 callback.onSummaryLoaded(DataResponse.createError(0, t))
+            }
+        })
+    }
+
+    override suspend fun getCountries(callback: IDataRepository.CountriesCallback) {
+        api.getCountries().enqueue(object : Callback<List<CountryItem>> {
+            override fun onResponse(call: Call<List<CountryItem>>, response: Response<List<CountryItem>>) {
+                val dataResponse = DataResponse.create(response)
+                callback.onCountriesLoaded(dataResponse)
+            }
+
+            override fun onFailure(call: Call<List<CountryItem>>, t: Throwable) {
+                t.printStackTrace()
+                callback.onCountriesLoaded(DataResponse.createError(0, t))
             }
         })
     }

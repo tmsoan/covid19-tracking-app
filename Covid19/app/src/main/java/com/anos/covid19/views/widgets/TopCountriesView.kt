@@ -29,7 +29,7 @@ class TopCountriesView : LinearLayout {
 
     @SuppressLint("InflateParams")
     private fun init(attrs: AttributeSet?) {
-        addView(LayoutInflater.from(context).inflate(R.layout.layout_country_cases_view, null))
+        addView(LayoutInflater.from(context).inflate(R.layout.layout_top_countries_view, null))
 
     }
 }

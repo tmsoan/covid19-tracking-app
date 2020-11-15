@@ -3,4 +3,6 @@
     <dimen name="padding_standard">16dp</dimen>
     <dimen name="header_size">20sp</dimen>
     <dimen name="header_margin">32dp</dimen>
+    <dimen name="tv_size_country_no">23sp</dimen>
+    <dimen name="tv_size_country_label">14sp</dimen>
 </resources>

@@ -1,5 +1,6 @@
 package com.anos.covid19.network
 
+import com.anos.covid19.model.CountryItem
 import com.anos.covid19.model.response.SummaryResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -16,4 +17,9 @@ interface IAppAPI {
     @GET("/summary")
     fun getSummary(): Call<SummaryResponse>
 
+    /**
+     * Returns all the available countries and provinces, as well as the country slug for per country requests.
+     */
+    @GET("/countries")
+    fun getCountries(): Call<List<CountryItem>>
 }

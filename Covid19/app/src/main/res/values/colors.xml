@@ -9,6 +9,7 @@
     <color name="text_dark_light">#555555</color>
 
     <color name="confirmed_color">#0057FF</color>
+    <color name="active_color">#FFC107</color>
     <color name="death_color">#F44336</color>
     <color name="recovered_color">#4CAF50</color>
 

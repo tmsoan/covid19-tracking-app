@@ -15,13 +15,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_toRightOf="@+id/chart">
 
         <!-- CONFIRMED //////////////////////////////////////////////-->
         <LinearLayout
-            android:id="@+id/ln_confirmed"
+            android:id="@+id/ln_active"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -31,27 +31,27 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_gravity="center_vertical"
-                android:background="@color/confirmed_color" />
+                android:background="@color/active_color" />
 
             <TextView
-                android:id="@+id/lb_confirmed"
+                android:id="@+id/lb_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
-                android:text="CONFIRMED"
+                android:text="ACTIVE"
                 android:textColor="@color/text_dark"
                 android:textSize="14sp"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_confirmed"
+            android:id="@+id/tv_no_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_below="@+id/ln_confirmed"
+            android:layout_below="@+id/ln_active"
             android:textStyle="bold"
-            android:text="15 076 123"
+            android:text="..."
             android:textColor="@color/text_dark"
             android:textSize="16sp"/>
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_below="@+id/tv_confirmed"
+            android:layout_below="@+id/tv_no_active"
             android:orientation="horizontal">
 
             <View
@@ -84,13 +84,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_recovered"
+            android:id="@+id/tv_no_recovered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_below="@+id/ln_recovered"
             android:textStyle="bold"
-            android:text="35 026 122"
+            android:text="..."
             android:textColor="@color/text_dark"
             android:textSize="16sp"/>
 
@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_below="@+id/tv_recovered"
+            android:layout_below="@+id/tv_no_recovered"
             android:orientation="horizontal">
 
             <View
@@ -123,16 +123,33 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_death"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_below="@+id/ln_death"
-            android:textStyle="bold"
-            android:text="1 225 920"
-            android:textColor="@color/text_dark"
-            android:textSize="16sp"/>
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_no_death"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:text="..."
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_no_death_increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textColor="@color/death_color"
+                android:textSize="12sp"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <TextView
@@ -142,7 +159,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/chart"
         android:textStyle="bold"
-        android:text="Total: 61 225 920"
+        android:text=""
         android:textColor="@color/text_dark"
         android:textSize="26sp"/>
 

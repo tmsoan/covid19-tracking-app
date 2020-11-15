@@ -1,5 +1,6 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -61,12 +62,13 @@
                     android:text="@string/global_cases" />
 
                 <TextView
+                    android:id="@+id/tv_global_updated_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="12sp"
                     android:textColor="@color/text_dark_light"
-                    android:text="Updated 14/11/2020" />
+                    tools:text="Updated 14/11/2020" />
             </LinearLayout>
 
             <com.anos.covid19.views.widgets.GlobalCasesView
@@ -90,6 +92,7 @@
                     android:background="@drawable/shape_header_li" />
 
                 <TextView
+                    android:id="@+id/tv_country_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -97,8 +100,22 @@
                     android:textSize="@dimen/header_size"
                     android:textColor="@color/text_dark"
                     android:textStyle="bold"
-                    android:text="Vietnam"
+                    tools:text="Vietnam"
                     app:drawableEndCompat="@drawable/ic_arrow_drop_down" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_country_updated_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_dark_light"
+                    tools:text="Updated 14/11/2020" />
 
             </LinearLayout>
 
@@ -153,129 +170,13 @@
                     android:text="Updated 14/11/2020" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:layout_marginTop="@dimen/padding_standard"
-                android:layout_gravity="center_vertical"
-                android:background="@color/text_dark_light" />
-
-            <LinearLayout
+            <com.anos.covid19.views.widgets.TopCountriesView
+                android:id="@+id/topCountriesView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/header_margin">
+                android:layout_marginTop="@dimen/padding_standard" />
 
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/shape_header_li" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/header_size"
-                    android:textColor="@color/text_dark"
-                    android:textStyle="bold"
-                    android:text="@string/global_cases" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_dark_light"
-                    android:text="Updated 14/11/2020" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:layout_marginTop="@dimen/padding_standard"
-                android:layout_gravity="center_vertical"
-                android:background="@color/text_dark_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/header_margin">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/shape_header_li" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/header_size"
-                    android:textColor="@color/text_dark"
-                    android:textStyle="bold"
-                    android:text="@string/global_cases" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_dark_light"
-                    android:text="Updated 14/11/2020" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:layout_marginTop="@dimen/padding_standard"
-                android:layout_gravity="center_vertical"
-                android:background="@color/text_dark_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/header_margin">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/shape_header_li" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/header_size"
-                    android:textColor="@color/text_dark"
-                    android:textStyle="bold"
-                    android:text="@string/global_cases" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_dark_light"
-                    android:text="Updated 14/11/2020" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:layout_marginTop="@dimen/padding_standard"
-                android:layout_gravity="center_vertical"
-                android:background="@color/text_dark_light" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

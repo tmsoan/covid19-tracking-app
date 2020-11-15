@@ -25,4 +25,11 @@ data class Country(
     var date: String? = "",
     @SerializedName("Premium")
     var premium: Premium? = null
-)
+) {
+    fun getActiveCases(): Int {
+        val total = totalConfirmed ?: 0
+        val recovered = totalRecovered ?: 0
+        val death = totalDeaths ?: 0
+        return total - recovered - death
+    }
+}

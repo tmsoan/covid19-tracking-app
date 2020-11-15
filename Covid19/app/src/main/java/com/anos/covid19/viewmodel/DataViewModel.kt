@@ -3,6 +3,7 @@ package com.anos.covid19.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.anos.covid19.model.CountryItem
 import com.anos.covid19.model.response.SummaryResponse
 import com.anos.covid19.network.DataErrorResponse
 import com.anos.covid19.network.DataResponse
@@ -30,6 +31,14 @@ class DataViewModel : BaseViewModel() {
     private val _summaryResult = MutableLiveData<SummaryResponse>()
     val summaryResult: LiveData<SummaryResponse> = _summaryResult
 
+    /**
+     * this livedata to listen the RESULT from Countries API's response
+     */
+    private val _countriesResult = MutableLiveData<List<CountryItem>>()
+    val countriesResult: LiveData<List<CountryItem>> = _countriesResult
+    var countries: List<CountryItem>? = null
+
+
 
     /**
      * fetch new Summary data,
@@ -42,6 +51,30 @@ class DataViewModel : BaseViewModel() {
                 override fun onSummaryLoaded(dataResponse: DataResponse<SummaryResponse>) {
                     if (dataResponse is DataSuccessResponse) {
                         _summaryResult.postValue(dataResponse.body)
+                    } else {
+                        _responseError.postValue((dataResponse as DataErrorResponse).errorMessage)
+                    }
+                    _loading.postValue(false)
+                }
+            })
+        }
+    }
+
+    /**
+     * get list countries available,
+     */
+    fun getCountries(showLoading: Boolean) {
+        if (!countries.isNullOrEmpty()) {
+            _countriesResult.value = countries
+            return
+        }
+        viewModelScope.launch {
+            _loading.postValue(showLoading)
+            dataRepository.getCountries(object : IDataRepository.CountriesCallback {
+                override fun onCountriesLoaded(dataResponse: DataResponse<List<CountryItem>>) {
+                    if (dataResponse is DataSuccessResponse) {
+                        countries = dataResponse.body
+                        _countriesResult.postValue(dataResponse.body)
                     } else {
                         _responseError.postValue((dataResponse as DataErrorResponse).errorMessage)
                     }

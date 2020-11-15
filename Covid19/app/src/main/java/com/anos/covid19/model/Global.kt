@@ -14,4 +14,11 @@ data class Global(
     var newRecovered: Int? = 0,
     @SerializedName("TotalRecovered")
     var totalRecovered: Int? = 0
-)
+) {
+    fun getActiveCases(): Int {
+        val total = totalConfirmed ?: 0
+        val recovered = totalRecovered ?: 0
+        val death = totalDeaths ?: 0
+        return total - recovered - death
+    }
+}
