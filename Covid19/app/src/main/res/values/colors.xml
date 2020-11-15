@@ -7,4 +7,15 @@
     <color name="background_color">#F9F9F9</color>
     <color name="text_dark">#313131</color>
     <color name="text_dark_light">#555555</color>
+
+    <color name="confirmed_color">#0057FF</color>
+    <color name="death_color">#F44336</color>
+    <color name="recovered_color">#4CAF50</color>
+
+
+    <array name="pieChartColors">
+        <item>@color/confirmed_color</item>
+        <item>@color/death_color</item>
+        <item>@color/recovered_color</item>
+    </array>
 </resources>
