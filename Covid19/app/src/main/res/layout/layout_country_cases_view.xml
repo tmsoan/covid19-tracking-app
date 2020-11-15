@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/shape_case_item_bg">
+
+        <TextView
+            android:id="@+id/tv_cases_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:text="2,100"
+            android:textColor="@color/text_dark"
+            android:textSize="26sp"/>
+
+        <TextView
+            android:id="@+id/lb_title_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_below="@+id/tv_cases_confirmed"
+            android:text="Confirmed"
+            android:textColor="@color/text_dark_light"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:layout_below="@id/tv_cases_confirmed"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_mini_chart_confirmed"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape_case_item_bg">
+
+        <TextView
+            android:id="@+id/tv_cases_recovered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:text="1,120"
+            android:textColor="@color/text_dark"
+            android:textSize="26sp"/>
+
+        <TextView
+            android:id="@+id/lb_title_recovered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_below="@+id/tv_cases_recovered"
+            android:text="Recovered"
+            android:textColor="@color/text_dark_light"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:layout_below="@id/tv_cases_recovered"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_mini_chart_recovered"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/shape_case_item_bg">
+
+        <TextView
+            android:id="@+id/tv_cases_death"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:text="2,100"
+            android:textColor="@color/text_dark"
+            android:textSize="26sp"/>
+
+        <TextView
+            android:id="@+id/lb_title_death"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_below="@+id/tv_cases_death"
+            android:text="Death"
+            android:textColor="@color/text_dark_light"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:layout_below="@id/tv_cases_death"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_mini_chart_death"/>
+    </RelativeLayout>
+</LinearLayout>
