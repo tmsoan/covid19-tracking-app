@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anos.covid19.R
+import com.anos.covid19.model.Country
 import com.anos.covid19.model.CountryItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
@@ -19,7 +20,7 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
 
     interface ICountrySearchCallback {
         fun onDialogShowing()
-        fun onDialogDismiss()
+        fun onDialogDismiss(code: String?)
     }
 
     companion object {
@@ -29,7 +30,8 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
     var listener: ICountrySearchCallback? = null
     var bottomSheetBehavior: BottomSheetBehavior<View>? = null
 
-    private var countries: List<CountryItem>? = null
+    private var selectedCountry: String? = null
+    private var countries: List<Country>? = null
     private var adapter: CountriesSearchAdapter? = null
 
     private var rcCountries: RecyclerView? = null
@@ -48,7 +50,6 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (BottomSheetBehavior.STATE_HIDDEN == newState) {
-                    listener?.onDialogDismiss()
                     dismiss()
                 }
             }
@@ -69,7 +70,6 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
     override fun onResume() {
         super.onResume()
         listener?.onDialogShowing()
-        adapter?.countries = countries ?: ArrayList()
     }
 
     private fun initRecyclerView() {
@@ -81,12 +81,17 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
         rcCountries?.adapter = adapter
     }
 
-    fun loadCountries(lst: List<CountryItem>) {
+    fun loadCountries(lst: List<Country>, currentCountryCode: String) {
         this.countries = lst
-        adapter?.countries = countries ?: ArrayList()
+        this.selectedCountry = currentCountryCode
+        countries?.let { lstItems ->
+            adapter?.update(lstItems.sortedWith(compareByDescending {it.totalConfirmed}), currentCountryCode)
+        }
     }
 
-    override fun onItemSelected(position: Int, item: CountryItem) {
-
+    override fun onItemSelected(position: Int, code: String) {
+        selectedCountry = code
+        listener?.onDialogDismiss(selectedCountry)
+        dismiss()
     }
 }

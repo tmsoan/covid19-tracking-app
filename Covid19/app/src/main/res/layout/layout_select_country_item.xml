@@ -8,12 +8,39 @@
     <TextView
         android:id="@+id/tv_country_name"
         android:layout_width="match_parent"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_number_cases"
+        android:ellipsize="end"
         tools:text="United Kingdom"
         android:textColor="@color/text_dark"
         android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_number_cases"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/imv_check"
+        tools:text="1200"
+        android:textColor="@color/text_dark"
+        android:textSize="12.5sp"/>
+
+    <ImageView
+        android:id="@+id/imv_check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_checked"
+        tools:visibility="visible"
+        android:visibility="invisible"/>
 
     <View
         android:layout_width="match_parent"

@@ -28,8 +28,9 @@ class DataViewModel : BaseViewModel() {
     /**
      * this livedata to listen the RESULT from Summary API's response
      */
-    private val _summaryResult = MutableLiveData<SummaryResponse>()
-    val summaryResult: LiveData<SummaryResponse> = _summaryResult
+    private val _summaryLiveData = MutableLiveData<SummaryResponse>()
+    val summaryLiveData: LiveData<SummaryResponse> = _summaryLiveData
+    var summaryResult: SummaryResponse? = null
 
     /**
      * this livedata to listen the RESULT from Countries API's response
@@ -50,7 +51,8 @@ class DataViewModel : BaseViewModel() {
             dataRepository.getSummary(object : IDataRepository.SummaryCallback {
                 override fun onSummaryLoaded(dataResponse: DataResponse<SummaryResponse>) {
                     if (dataResponse is DataSuccessResponse) {
-                        _summaryResult.postValue(dataResponse.body)
+                        summaryResult = dataResponse.body
+                        _summaryLiveData.postValue(dataResponse.body)
                     } else {
                         _responseError.postValue((dataResponse as DataErrorResponse).errorMessage)
                     }

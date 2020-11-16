@@ -79,51 +79,61 @@
                 android:layout_gravity="center_vertical" />
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/header_margin">
 
                 <View
+                    android:id="@+id/v_left_2"
                     android:layout_width="6dp"
                     android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/shape_header_li" />
 
-                <TextView
-                    android:id="@+id/tv_country_name"
+                <LinearLayout
+                    android:id="@+id/ln_country_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal"
                     android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/header_size"
-                    android:textColor="@color/text_dark"
-                    android:textStyle="bold"
-                    tools:text="Vietnam"
-                    app:drawableEndCompat="@drawable/ic_arrow_drop_down" />
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/v_left_2"
+                    android:layout_toLeftOf="@+id/tv_country_updated_date">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/tv_country_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/header_size"
+                        android:textColor="@color/text_dark"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        tools:text="Vietnam"
+                        android:drawableRight="@drawable/ic_arrow_drop_down"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_country_updated_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
                     android:textSize="12sp"
                     android:textColor="@color/text_dark_light"
                     tools:text="Updated 14/11/2020" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="@dimen/padding_standard">
 
                 <com.anos.covid19.views.widgets.CountryCasesView
                     android:id="@+id/countryCaseView"
@@ -162,6 +172,7 @@
                     android:text="@string/top_countries" />
 
                 <TextView
+                    android:id="@+id/tv_top_country_updated_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -170,7 +181,7 @@
                     android:text="Updated 14/11/2020" />
             </LinearLayout>
 
-            <com.anos.covid19.views.widgets.TopCountriesView
+            <com.anos.covid19.views.topcountry.TopCountriesView
                 android:id="@+id/topCountriesView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

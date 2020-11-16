@@ -1,5 +1,6 @@
 package com.anos.covid19.model
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 
 data class Country(
@@ -22,7 +23,7 @@ data class Country(
     @SerializedName("TotalRecovered")
     var totalRecovered: Int? = 0,
     @SerializedName("Date")
-    var date: String? = "",
+    var date: Date? = null,
     @SerializedName("Premium")
     var premium: Premium? = null
 ) {

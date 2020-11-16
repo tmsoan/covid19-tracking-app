@@ -33,12 +33,22 @@
             android:textColor="@color/text_dark_light"
             android:textSize="@dimen/tv_size_country_label"/>
 
+        <TextView
+            android:id="@+id/lb_new_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/lb_title_confirmed"
+            tools:text="+1000"
+            android:textColor="@color/confirmed_color"
+            android:textSize="@dimen/tv_size_country_new"/>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:scaleType="centerCrop"
-            android:layout_below="@id/tv_cases_confirmed"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:src="@drawable/ic_mini_chart_confirmed"/>
     </RelativeLayout>
 
@@ -72,11 +82,21 @@
             android:textColor="@color/text_dark_light"
             android:textSize="@dimen/tv_size_country_label"/>
 
+        <TextView
+            android:id="@+id/lb_new_recovered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/lb_title_recovered"
+            tools:text="+1000"
+            android:textColor="@color/recovered_color"
+            android:textSize="@dimen/tv_size_country_new"/>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:scaleType="fitXY"
-            android:layout_below="@id/tv_cases_recovered"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_mini_chart_recovered"/>
     </RelativeLayout>
@@ -109,11 +129,21 @@
             android:textColor="@color/text_dark_light"
             android:textSize="@dimen/tv_size_country_label"/>
 
+        <TextView
+            android:id="@+id/lb_new_death"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/lb_title_death"
+            tools:text="+1000"
+            android:textColor="@color/death_color"
+            android:textSize="@dimen/tv_size_country_new"/>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:scaleType="fitXY"
-            android:layout_below="@id/tv_cases_death"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_mini_chart_death"/>
     </RelativeLayout>

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anos.covid19.R
-import com.anos.covid19.model.CountryItem
+import com.anos.covid19.model.Country
 import com.anos.covid19.utils.DialogUtil
 import com.anos.covid19.utils.getUpdatedDateString
 import com.anos.covid19.utils.obtainViewModel
@@ -14,7 +14,6 @@ import com.anos.covid19.views.MainActivity
 import com.anos.covid19.views.base.BaseFragment
 import com.anos.covid19.views.country.CountrySearchBottomSheet
 import kotlinx.android.synthetic.main.fragment_home.*
-import timber.log.Timber
 
 class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCallback {
 
@@ -22,7 +21,6 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     private var defaultCountryCode = "VN"
 
     private var countryDialog: CountrySearchBottomSheet? = null
-    private var showingCountrySearch = false
 
 
 
@@ -36,7 +34,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     override fun initLayout() {
         swipe_container.setOnRefreshListener(onSwipeRefreshListener)
         swipe_container.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
-        tv_country_name.setOnClickListener(onCountryNameClicked)
+        ln_country_name.setOnClickListener(onCountryNameClicked)
     }
 
     private fun initData() {
@@ -79,7 +77,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     }
 
     private fun handleDataResponse() {
-        dataViewModel.summaryResult.observe(viewLifecycleOwner, Observer {
+        dataViewModel.summaryLiveData.observe(viewLifecycleOwner, Observer {
             if (it == null)
                 return@Observer
             // update global
@@ -88,17 +86,19 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
             }
             it.date?.let { date ->
                 tv_global_updated_date?.text = getUpdatedDateString(date)
-                tv_country_updated_date?.text = getUpdatedDateString(date)
+                tv_top_country_updated_date?.text = getUpdatedDateString(date)
             }
 
             // update current country
-            it.countries?.single { country ->
-                country.countryCode == defaultCountryCode
-            }?.let { country ->
-                // update country layout
-                countryCaseView?.update(country)
-                // country name
-                tv_country_name?.text = country.country
+            it.countries?.forEach { country ->
+                if (country.countryCode == defaultCountryCode) {
+                    updateCountryView(country)
+                }
+            }
+
+            // top countries
+            it.countries?.let { lst ->
+                updateTopCountries(lst)
             }
         })
     }
@@ -111,6 +111,26 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     }
 
     /**
+     * refresh country view
+     */
+    private fun updateCountryView(country: Country) {
+        // update country layout
+        countryCaseView?.update(country)
+        // country name
+        tv_country_name?.text = country.country
+        country.date?.let {
+            tv_country_updated_date?.text = getUpdatedDateString(it)
+        }
+    }
+
+    /**
+     * load TOP 50 countries
+     */
+    private fun updateTopCountries(lst: List<Country>) {
+        topCountriesView?.loadCountries(lst)
+    }
+
+    /**
      * start loading Summary
      */
     private fun fetchSummaryData() {
@@ -118,29 +138,31 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     }
 
     private fun fetchNeededData() {
-        dataViewModel.getCountries(false)
+        //dataViewModel.getCountries(false)
     }
 
     /**
      * change country action
      */
     private val onCountryNameClicked = View.OnClickListener {
-        showingCountrySearch = true
         countryDialog = CountrySearchBottomSheet.getInstance()
         countryDialog?.listener = this
         countryDialog?.show(childFragmentManager, CountrySearchBottomSheet::javaClass.name)
-
-        // fetch countries
-        dataViewModel.getCountries(false)
     }
 
     override fun onDialogShowing() {
-        dataViewModel.countries?.let {
-            countryDialog?.loadCountries(it)
+        dataViewModel.summaryResult?.countries?.let {
+            countryDialog?.loadCountries(it, defaultCountryCode)
         }
     }
 
-    override fun onDialogDismiss() {
-        showingCountrySearch = false
+    override fun onDialogDismiss(code: String?) {
+        defaultCountryCode = code ?: defaultCountryCode
+        // update current country
+        dataViewModel.summaryResult?.countries?.forEach {
+            if (it.countryCode == defaultCountryCode) {
+                updateCountryView(it)
+            }
+        }
     }
 }
