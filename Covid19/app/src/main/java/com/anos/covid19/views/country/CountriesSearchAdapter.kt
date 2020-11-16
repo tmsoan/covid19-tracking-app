@@ -35,11 +35,9 @@ class CountriesSearchAdapter(
 
     override fun onBindViewHolder(holder: CountryItemViewHolder, position: Int) {
         holder.bind(countries[position])
-        Timber.e("============== ${countries[position].country}")
     }
 
     override fun getItemCount(): Int {
-        Timber.e("============== ${countries.size}")
         return countries.size
     }
 

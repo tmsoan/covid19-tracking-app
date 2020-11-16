@@ -43,9 +43,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_countries_search"
         android:padding="8dp"
-        android:background="@color/text_dark_light"
         android:layout_width="match_parent"
-        android:layout_height="500dp"/>
+        android:layout_height="match_parent"/>
 
     <View
         android:id="@+id/extraSpace"

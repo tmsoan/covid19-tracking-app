@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anos.covid19.R
+import com.anos.covid19.model.CountryItem
 import com.anos.covid19.utils.DialogUtil
 import com.anos.covid19.utils.getUpdatedDateString
 import com.anos.covid19.utils.obtainViewModel
@@ -15,12 +16,13 @@ import com.anos.covid19.views.country.CountrySearchBottomSheet
 import kotlinx.android.synthetic.main.fragment_home.*
 import timber.log.Timber
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCallback {
 
     private lateinit var dataViewModel: DataViewModel
     private var defaultCountryCode = "VN"
 
     private var countryDialog: CountrySearchBottomSheet? = null
+    private var showingCountrySearch = false
 
 
 
@@ -34,7 +36,6 @@ class HomeFragment : BaseFragment() {
     override fun initLayout() {
         swipe_container.setOnRefreshListener(onSwipeRefreshListener)
         swipe_container.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
-
         tv_country_name.setOnClickListener(onCountryNameClicked)
     }
 
@@ -44,8 +45,10 @@ class HomeFragment : BaseFragment() {
         handleLoading()
         handleErrorResponse()
         handleDataResponse()
+        handleLoadCountries()
 
         fetchSummaryData()
+        fetchNeededData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,6 +103,13 @@ class HomeFragment : BaseFragment() {
         })
     }
 
+    private fun handleLoadCountries() {
+        dataViewModel.countriesResult.observe(viewLifecycleOwner, Observer {
+            if (it == null)
+                return@Observer
+        })
+    }
+
     /**
      * start loading Summary
      */
@@ -107,23 +117,30 @@ class HomeFragment : BaseFragment() {
         dataViewModel.getSummary()
     }
 
+    private fun fetchNeededData() {
+        dataViewModel.getCountries(false)
+    }
+
     /**
      * change country action
      */
     private val onCountryNameClicked = View.OnClickListener {
-        countryDialog = CountrySearchBottomSheet()
+        showingCountrySearch = true
+        countryDialog = CountrySearchBottomSheet.getInstance()
+        countryDialog?.listener = this
         countryDialog?.show(childFragmentManager, CountrySearchBottomSheet::javaClass.name)
 
+        // fetch countries
+        dataViewModel.getCountries(false)
+    }
+
+    override fun onDialogShowing() {
         dataViewModel.countries?.let {
             countryDialog?.loadCountries(it)
         }
+    }
 
-//        dataViewModel.countriesResult.observe(viewLifecycleOwner, Observer {
-//            if (it == null)
-//                return@Observer
-//            countryDialog?.loadCountries(it)
-//        })
-//        // fetch countries
-        dataViewModel.getCountries(false)
+    override fun onDialogDismiss() {
+        showingCountrySearch = false
     }
 }

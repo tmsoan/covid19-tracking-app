@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.core.view.ViewCompat.animate
-import com.anos.covid19.MyApp
 import com.anos.covid19.R
 import com.anos.covid19.model.ScreenEventObject
 import com.anos.covid19.utils.ScreenUtils
-import com.anos.covid19.utils.obtainViewModel
-import com.anos.covid19.viewmodel.DataViewModel
 import com.anos.covid19.views.MainActivity
 import com.anos.covid19.views.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -31,8 +28,6 @@ class SplashActivity : BaseActivity() {
     private lateinit var timer: Timer
     private var animationStarted = false
 
-    private lateinit var dataViewModel: DataViewModel
-
     override fun getLayoutId(): Int {
         return R.layout.activity_splash
     }
@@ -51,10 +46,6 @@ class SplashActivity : BaseActivity() {
                 startFirstActivity()
             }
         }, SPLASH_TIME)
-
-        dataViewModel = obtainViewModel(DataViewModel::class.java)
-
-        fetchNeededData()
     }
 
     override fun onBackPressed() {
@@ -87,6 +78,4 @@ class SplashActivity : BaseActivity() {
                 .start()
     }
 
-    private fun fetchNeededData() {
-    }
 }

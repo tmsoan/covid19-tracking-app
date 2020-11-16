@@ -36,7 +36,7 @@ class DataViewModel : BaseViewModel() {
      */
     private val _countriesResult = MutableLiveData<List<CountryItem>>()
     val countriesResult: LiveData<List<CountryItem>> = _countriesResult
-    var countries: List<CountryItem>? = null
+    var countries: ArrayList<CountryItem>? = null
 
 
 
@@ -64,7 +64,7 @@ class DataViewModel : BaseViewModel() {
      * get list countries available,
      */
     fun getCountries(showLoading: Boolean) {
-        if (!countries.isNullOrEmpty()) {
+        if (!countries.isNullOrEmpty()) {// load from cache if have
             _countriesResult.value = countries
             return
         }
@@ -73,7 +73,10 @@ class DataViewModel : BaseViewModel() {
             dataRepository.getCountries(object : IDataRepository.CountriesCallback {
                 override fun onCountriesLoaded(dataResponse: DataResponse<List<CountryItem>>) {
                     if (dataResponse is DataSuccessResponse) {
-                        countries = dataResponse.body
+                        if (!dataResponse.body.isNullOrEmpty()) {
+                            countries = ArrayList()
+                            countries?.addAll(dataResponse.body)
+                        }
                         _countriesResult.postValue(dataResponse.body)
                     } else {
                         _responseError.postValue((dataResponse as DataErrorResponse).errorMessage)

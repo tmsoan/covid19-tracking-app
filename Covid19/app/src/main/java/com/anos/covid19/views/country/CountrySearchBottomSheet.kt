@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anos.covid19.R
 import com.anos.covid19.model.CountryItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -16,14 +17,26 @@ import timber.log.Timber
 
 class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAdapter.Interaction {
 
+    interface ICountrySearchCallback {
+        fun onDialogShowing()
+        fun onDialogDismiss()
+    }
+
+    companion object {
+        fun getInstance(): CountrySearchBottomSheet = CountrySearchBottomSheet()
+    }
+
+    var listener: ICountrySearchCallback? = null
     var bottomSheetBehavior: BottomSheetBehavior<View>? = null
 
     private var countries: List<CountryItem>? = null
-    private lateinit var adapter: CountriesSearchAdapter
+    private var adapter: CountriesSearchAdapter? = null
+
+    private var rcCountries: RecyclerView? = null
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheet = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-
         val view = View.inflate(context, R.layout.layout_bottom_sheet_country, null)
         bottomSheet.setContentView(view)
 
@@ -35,10 +48,13 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (BottomSheetBehavior.STATE_HIDDEN == newState) {
+                    listener?.onDialogDismiss()
                     dismiss()
                 }
             }
         })
+
+        rcCountries = bottomSheet.findViewById(R.id.rc_countries_search)
 
         initRecyclerView()
 
@@ -48,34 +64,26 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
     override fun onStart() {
         super.onStart()
         bottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
+    }
 
-        // init listview
-//        adapter = CountriesSearchAdapter(countries ?: ArrayList(), this)
-//        val llManager = LinearLayoutManager(context)
-//        llManager.orientation = LinearLayoutManager.VERTICAL
-//        rc_countries?.let {
-//            it.setHasFixedSize(false)
-//            it.layoutManager = llManager
-//            it.adapter = adapter
-//        }
+    override fun onResume() {
+        super.onResume()
+        listener?.onDialogShowing()
+        adapter?.countries = countries ?: ArrayList()
     }
 
     private fun initRecyclerView() {
-        adapter = CountriesSearchAdapter(countries ?: ArrayList(), this)
+        adapter = CountriesSearchAdapter(ArrayList(), this)
         val llManager = LinearLayoutManager(context)
         llManager.orientation = LinearLayoutManager.VERTICAL
-        rc_countries_search?.setHasFixedSize(false)
-        rc_countries_search?.layoutManager = llManager
-        rc_countries_search?.adapter = adapter
-
-        Timber.e("============0 loadCountries: ${countries?.size} $rc_countries_search")
+        rcCountries?.setHasFixedSize(false)
+        rcCountries?.layoutManager = llManager
+        rcCountries?.adapter = adapter
     }
 
     fun loadCountries(lst: List<CountryItem>) {
         this.countries = lst
-//        adapter?.countries = countries ?: ArrayList()
-        et_search_box?.setText("loadCountries")
-        Timber.e("============1 loadCountries: ${countries?.size} $rc_countries_search")
+        adapter?.countries = countries ?: ArrayList()
     }
 
     override fun onItemSelected(position: Int, item: CountryItem) {
