@@ -1,8 +1,10 @@
 package com.anos.covid19.model
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-
+@Parcelize
 data class Country(
     @SerializedName("Country")
     var country: String? = "",
@@ -28,7 +30,7 @@ data class Country(
     var premium: Premium? = null,
 
     var order: Int = 0
-) {
+) : Parcelable {
     fun getActiveCases(): Int {
         val total = totalConfirmed ?: 0
         val recovered = totalRecovered ?: 0

@@ -48,7 +48,7 @@ class TopCountriesAdapter(
         fun bind(pos: Int, item: Country) = with(itemView) {
             itemView.setOnClickListener {
                 Timber.e("${item.countryCode}")
-                interaction?.onItemSelected(adapterPosition, item.countryCode ?: "")
+                interaction?.onTopCountryItemSelected(item)
             }
             tv_no.text = "${pos + 1}."
             tv_country_name.text = item.country
@@ -58,6 +58,6 @@ class TopCountriesAdapter(
     }
 
     interface Interaction {
-        fun onItemSelected(position: Int, code: String)
+        fun onTopCountryItemSelected(country: Country)
     }
 }

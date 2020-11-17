@@ -17,6 +17,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.anos.covid19.R
+import com.anos.covid19.model.CircleChartData
+import com.anos.covid19.model.Country
 import com.anos.covid19.model.Global
 import com.anos.covid19.model.GlobalChartItem
 import com.anos.covid19.utils.getIntThousandFormat
@@ -35,13 +37,13 @@ import timber.log.Timber
 import java.util.*
 
 
-class GlobalCasesView : RelativeLayout {
+class CircleChartCasesView : RelativeLayout {
 
     private val parties = arrayOf(
         "Active", "Recovered", "Death"
     )
 
-    private var global: Global? = null
+    private var data: CircleChartData? = null
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
         init(attrs)
@@ -160,27 +162,38 @@ class GlobalCasesView : RelativeLayout {
         return s
     }
 
-    fun update(data: Global) {
-        global = data
+    fun update(country: Country) {
+        data = CircleChartData()
+        data?.clone(country)
+        updateDataChart()
+    }
+
+    fun update(g: Global) {
+        data = CircleChartData()
+        data?.clone(g)
+        updateDataChart()
+    }
+
+    private fun updateDataChart() {
         val lstData = ArrayList<GlobalChartItem>()
         // legend information
-        global?.getActiveCases()?.let {
+        data?.getActiveCases()?.let {
             lstData.add(GlobalChartItem("Active", it, R.color.active_color))
             tv_no_active?.setText(getIntThousandFormat(it))
         }
-        global?.totalRecovered?.let {
+        data?.totalRecovered?.let {
             lstData.add(GlobalChartItem("Recovered", it, R.color.recovered_color))
             tv_no_recovered?.setText(getIntThousandFormat(it))
         }
-        global?.totalDeaths?.let {
+        data?.totalDeaths?.let {
             lstData.add(GlobalChartItem("Death", it, R.color.death_color))
             tv_no_death?.setText(getIntThousandFormat(it))
         }
-        global?.newDeaths?.let {
+        data?.newDeaths?.let {
             tv_no_death_increase?.setText("+${getIntThousandFormat(it)}")
         }
         // total
-        global?.totalConfirmed?.let {
+        data?.totalConfirmed?.let {
             tv_total_cases?.setText("Total ${getIntThousandFormat(it)}")
         }
 

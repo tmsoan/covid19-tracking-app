@@ -71,7 +71,7 @@
                     tools:text="Updated 14/11/2020" />
             </LinearLayout>
 
-            <com.anos.covid19.views.widgets.GlobalCasesView
+            <com.anos.covid19.views.widgets.CircleChartCasesView
                 android:id="@+id/globalCasesView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

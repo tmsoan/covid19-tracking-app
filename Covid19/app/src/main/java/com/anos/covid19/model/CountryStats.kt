@@ -1,7 +1,9 @@
 package com.anos.covid19.model
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class CountryStats(
     @SerializedName("CountryISO")
     var countryISO: String? = "",
@@ -37,4 +39,4 @@ data class CountryStats(
     var femaleSmokers: Int? = 0,
     @SerializedName("MaleSmokers")
     var maleSmokers: Int? = 0
-)
+) : Parcelable

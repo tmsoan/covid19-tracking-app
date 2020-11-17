@@ -71,40 +71,40 @@ class CountryChartView : RelativeLayout {
         initChartLayout()
 
         tv_7_days.setOnClickListener {
-            fromDate = getDaysAgo(Period.SEVEN.days)
             tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
             tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn)
-            reloadData()
+            reloadData(Period.SEVEN)
         }
         tv_30_days.setOnClickListener {
-            fromDate = getDaysAgo(Period.A_MONTH.days)
             tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
             tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn)
-            reloadData()
+            reloadData(Period.A_MONTH)
         }
         tv_180_days.setOnClickListener {
-            fromDate = getDaysAgo(Period.SIX_MONTH.days)
             tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
             tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn)
-            reloadData()
+            reloadData(Period.SIX_MONTH)
         }
         tv_all.setOnClickListener {
-            fromDate = getDaysAgo(Period.ALL.days)
             tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
             tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
-            reloadData()
+            reloadData(Period.ALL)
         }
     }
 
-    private fun reloadData() {
+    private fun reloadData(period: Period) {
+        if (this.period == period)
+            return
+        fromDate = getDaysAgo(period.days)
+        this.period = period
         listener?.onChartDateChange(fromDate, toDate)
         updatePeriodTime()
     }

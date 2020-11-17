@@ -13,7 +13,9 @@ import com.anos.covid19.utils.obtainViewModel
 import com.anos.covid19.viewmodel.DataViewModel
 import com.anos.covid19.views.MainActivity
 import com.anos.covid19.views.base.BaseFragment
+import com.anos.covid19.views.country.CountryQuickViewBottomSheet
 import com.anos.covid19.views.country.CountrySearchBottomSheet
+import com.anos.covid19.views.topcountry.TopCountriesView
 import com.anos.covid19.views.widgets.CountryChartView
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -25,6 +27,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     private var selectedCountryCode = "VN"
     private var selectedCountrySlug = "vietnam"
 
+    private var topCountryQuickViewDialog: CountryQuickViewBottomSheet? = null
     private var countryDialog: CountrySearchBottomSheet? = null
     private var requireLoading = false
 
@@ -42,6 +45,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
         swipe_container.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
         tv_country_name.setOnClickListener(onCountryNameClicked)
         countryChartView.listener = onCountryViewCallback
+        topCountriesView.listener = onTopCountryViewCallback
     }
 
     private fun initData() {
@@ -60,6 +64,12 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initData()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        topCountryQuickViewDialog = null
+        countryDialog = null
     }
 
     private val onSwipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
@@ -210,6 +220,13 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     private val onCountryViewCallback = object : CountryChartView.ICountryViewListener {
         override fun onChartDateChange(fromDate: Date, toDate: Date) {
             loadCountryTotalAllStatus(true, fromDate, toDate)
+        }
+    }
+
+    private val onTopCountryViewCallback = object : TopCountriesView.ICallback {
+        override fun onCountryItemClicked(country: Country) {
+            topCountryQuickViewDialog = CountryQuickViewBottomSheet.getInstance(country)
+            topCountryQuickViewDialog?.show(childFragmentManager, CountryQuickViewBottomSheet::javaClass.name)
         }
     }
 }

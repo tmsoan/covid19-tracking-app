@@ -38,4 +38,14 @@
         <item name="android:background">@drawable/shape_chart_period_btn</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="SheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>
