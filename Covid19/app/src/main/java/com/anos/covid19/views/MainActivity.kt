@@ -1,14 +1,15 @@
 package com.anos.covid19.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.anos.covid19.R
+import com.anos.covid19.model.Country
 import com.anos.covid19.model.ScreenEventObject
-import com.anos.covid19.utils.*
+import com.anos.covid19.utils.AppConst
+import com.anos.covid19.utils.AppConst.fragPopTransactionOptions
 import com.anos.covid19.views.base.BaseActivity
+import com.anos.covid19.views.country.AllCountriesFragment
 import com.anos.covid19.views.home.HomeFragment
-import com.anos.covid19.views.maps.MapsFragment
 import com.anos.covid19.views.maps.MapsFragment2
 import com.anos.covid19.views.more.MoreFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -38,7 +39,19 @@ class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
         setupFragmentNavController(savedInstanceState)
     }
 
+    override fun onBackPressed() {
+        if (fragNavController.popFragment(fragPopTransactionOptions).not()) {
+            super.onBackPressed()
+        }
+    }
+
     override fun openNewScreen(screenEventObject: ScreenEventObject) {
+        when (screenEventObject.screenName) {
+            AllCountriesFragment.NAME -> {
+                val countries = screenEventObject.data as ArrayList<Country>
+                pushFragmentWithFragNav(AllCountriesFragment.getInstance(countries), true)
+            }
+        }
     }
 
     private fun setupBottomBar() {
@@ -78,9 +91,6 @@ class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
             })
         }
         fragNavController.initialize(FragNavController.TAB1, savedInstanceState)
-    }
-
-    private fun pushFragmentByFragNavController(event: ScreenEventObject) {
     }
 
     private fun pushFragmentWithFragNav(fragment: Fragment, hasAnimation: Boolean) {

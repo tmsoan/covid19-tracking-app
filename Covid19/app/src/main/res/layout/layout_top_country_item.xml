@@ -45,7 +45,7 @@
             tools:text="1 200 123"
             android:gravity="right"
             android:textColor="@color/text_dark"
-            android:textSize="14sp"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/tv_new_case"

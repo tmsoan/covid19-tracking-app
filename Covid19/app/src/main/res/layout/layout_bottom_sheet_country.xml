@@ -28,7 +28,7 @@
             android:layout_marginStart="8dp"
             android:maxLines="1"
             android:padding="8dp"
-            android:textSize="16sp"
+            android:textSize="17.5sp"
             android:textColor="@color/text_dark"
             tools:text="abcd"
             android:hint="Search by country" />

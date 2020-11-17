@@ -17,6 +17,7 @@ class TopCountriesView : LinearLayout, TopCountriesAdapter.Interaction, CountryQ
 
     interface ICallback {
         fun onCountryItemClicked(country: Country)
+        fun onViewAllCountriesClicked(countries: List<Country>)
     }
 
     var listener: ICallback? = null
@@ -78,6 +79,8 @@ class TopCountriesView : LinearLayout, TopCountriesAdapter.Interaction, CountryQ
     }
 
     private fun viewAllCountries() {
-
+        countries?.let {
+            listener?.onViewAllCountriesClicked(it)
+        }
     }
 }

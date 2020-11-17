@@ -10,6 +10,9 @@ import com.anos.covid19.R
 import com.anos.covid19.model.Country
 import com.anos.covid19.utils.getIntThousandFormat
 import kotlinx.android.synthetic.main.layout_select_country_item.view.*
+import kotlinx.android.synthetic.main.layout_select_country_item.view.tv_country_name
+import kotlinx.android.synthetic.main.layout_select_country_item.view.tv_new_case
+import kotlinx.android.synthetic.main.layout_top_country_item.view.*
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -94,6 +97,7 @@ class CountriesSearchAdapter(
             }
             tv_country_name.text = "${item.order}. ${item.country}"
             tv_number_cases.text = getIntThousandFormat(item.totalConfirmed ?: 0)
+            tv_new_case.text = "+${getIntThousandFormat(item.newConfirmed ?: 0)}"
 
             selectedCountry?.let {
                 if (item.countryCode == it) {
