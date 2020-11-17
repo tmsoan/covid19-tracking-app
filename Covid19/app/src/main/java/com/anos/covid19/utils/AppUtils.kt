@@ -25,3 +25,19 @@ fun getUpdatedDateString(date: Date): String {
     val format = SimpleDateFormat("dd/MM/yyy")
     return format.format(date)
 }
+
+fun getDayInMonth(date: Date): String {
+    val format = SimpleDateFormat("dd/MM")
+    return format.format(date)
+}
+
+fun getDayInYear(date: Date): String {
+    val format = SimpleDateFormat("dd/MM/yyyy")
+    return format.format(date)
+}
+
+fun getDaysAgo(daysAgo: Int): Date {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+    return calendar.time
+}

@@ -2,7 +2,11 @@ package com.anos.covid19.views.country
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anos.covid19.R
@@ -20,7 +24,7 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
 
     interface ICountrySearchCallback {
         fun onDialogShowing()
-        fun onDialogDismiss(code: String?)
+        fun onDialogSelectCountryDismiss(code: String?)
     }
 
     companion object {
@@ -35,6 +39,7 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
     private var adapter: CountriesSearchAdapter? = null
 
     private var rcCountries: RecyclerView? = null
+    private var etSearchBox: EditText? = null
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -56,8 +61,14 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
         })
 
         rcCountries = bottomSheet.findViewById(R.id.rc_countries_search)
-
         initRecyclerView()
+
+        etSearchBox = bottomSheet.findViewById(R.id.et_search_box)
+        searchBoxHandling()
+
+        bottomSheet.findViewById<ImageView>(R.id.btn_close)?.setOnClickListener {
+            dismiss()
+        }
 
         return bottomSheet
     }
@@ -85,13 +96,34 @@ class CountrySearchBottomSheet : BottomSheetDialogFragment(), CountriesSearchAda
         this.countries = lst
         this.selectedCountry = currentCountryCode
         countries?.let { lstItems ->
-            adapter?.update(lstItems.sortedWith(compareByDescending {it.totalConfirmed}), currentCountryCode)
+            val items = lstItems.sortedWith(compareByDescending {it.totalConfirmed})
+            var i = 1
+            items.forEach {
+                it.order = i++
+            }
+            adapter?.update(items, currentCountryCode)
         }
     }
 
     override fun onItemSelected(position: Int, code: String) {
         selectedCountry = code
-        listener?.onDialogDismiss(selectedCountry)
+        listener?.onDialogSelectCountryDismiss(selectedCountry)
         dismiss()
+    }
+
+    private fun searchBoxHandling() {
+        etSearchBox?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                etSearchBox?.text?.trim()?.let {
+                    adapter?.filter?.filter(it)
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
     }
 }

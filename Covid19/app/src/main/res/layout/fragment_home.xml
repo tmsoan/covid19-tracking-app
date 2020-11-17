@@ -140,12 +140,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <View
+                <com.anos.covid19.views.widgets.CountryChartView
+                    android:id="@+id/countryChartView"
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    android:layout_marginTop="@dimen/padding_standard"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/text_dark_light" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout

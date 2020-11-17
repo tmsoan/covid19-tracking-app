@@ -31,4 +31,11 @@ object AppConst {
         R.anim.slide_out_to_right_flash)
         .build()
 
+    const val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+
+    object Status {
+        const val CONFIRMED = "confirmed"
+        const val RECOVERED = "recovered"
+        const val DEATH = "deaths"
+    }
 }

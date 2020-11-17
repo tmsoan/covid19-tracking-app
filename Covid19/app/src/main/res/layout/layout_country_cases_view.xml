@@ -95,7 +95,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_mini_chart_recovered"/>
@@ -142,7 +142,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_mini_chart_death"/>

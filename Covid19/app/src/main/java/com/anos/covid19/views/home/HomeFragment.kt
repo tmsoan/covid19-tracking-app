@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anos.covid19.R
 import com.anos.covid19.model.Country
+import com.anos.covid19.utils.AppConst
 import com.anos.covid19.utils.DialogUtil
 import com.anos.covid19.utils.getUpdatedDateString
 import com.anos.covid19.utils.obtainViewModel
@@ -18,9 +19,12 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCallback {
 
     private lateinit var dataViewModel: DataViewModel
-    private var defaultCountryCode = "VN"
+
+    private var selectedCountryCode = "VN"
+    private var selectedCountrySlug = "vietnam"
 
     private var countryDialog: CountrySearchBottomSheet? = null
+    private var requireLoading = false
 
 
 
@@ -44,6 +48,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
         handleErrorResponse()
         handleDataResponse()
         handleLoadCountries()
+        handleCountryTotalAllStatus()
 
         fetchSummaryData()
         fetchNeededData()
@@ -61,7 +66,16 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     private fun handleLoading() {
         dataViewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {
-                swipe_container.isRefreshing = it
+                if (requireLoading) {
+                    if (it) {
+                        showLoading()
+                    } else {
+                        hideLoading()
+                        requireLoading = false
+                    }
+                } else {
+                    swipe_container.isRefreshing = it
+                }
             }
         })
     }
@@ -91,8 +105,9 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
 
             // update current country
             it.countries?.forEach { country ->
-                if (country.countryCode == defaultCountryCode) {
-                    updateCountryView(country)
+                if (country.countryCode == selectedCountryCode) {
+                    updateCountryView(false, country)
+                    return@forEach
                 }
             }
 
@@ -110,16 +125,32 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
         })
     }
 
+    private fun handleCountryTotalAllStatus() {
+        // update chart
+        dataViewModel.countryTotalAllStatusLiveData.observe(viewLifecycleOwner, Observer {
+            if (it == null)
+                return@Observer
+            countryChartView?.update(it)
+        })
+    }
+
     /**
      * refresh country view
      */
-    private fun updateCountryView(country: Country) {
+    private fun updateCountryView(loading: Boolean, country: Country) {
+        selectedCountrySlug = country.slug ?: selectedCountrySlug
         // update country layout
         countryCaseView?.update(country)
         // country name
         tv_country_name?.text = country.country
         country.date?.let {
             tv_country_updated_date?.text = getUpdatedDateString(it)
+        }
+
+        // reload chart data
+        countryChartView?.let {
+            requireLoading = loading
+            dataViewModel.getCountryTotalAllStatus(selectedCountrySlug, it.fromDate, it.toDate)
         }
     }
 
@@ -152,16 +183,19 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
 
     override fun onDialogShowing() {
         dataViewModel.summaryResult?.countries?.let {
-            countryDialog?.loadCountries(it, defaultCountryCode)
+            countryDialog?.loadCountries(it, selectedCountryCode)
         }
     }
 
-    override fun onDialogDismiss(code: String?) {
-        defaultCountryCode = code ?: defaultCountryCode
+    override fun onDialogSelectCountryDismiss(code: String?) {
+        if (code == selectedCountryCode)
+            return
+        selectedCountryCode = code ?: selectedCountryCode
         // update current country
         dataViewModel.summaryResult?.countries?.forEach {
-            if (it.countryCode == defaultCountryCode) {
-                updateCountryView(it)
+            if (it.countryCode == selectedCountryCode) {
+                updateCountryView(true, it)
+                return@forEach
             }
         }
     }

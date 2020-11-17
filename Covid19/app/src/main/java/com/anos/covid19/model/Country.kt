@@ -25,7 +25,9 @@ data class Country(
     @SerializedName("Date")
     var date: Date? = null,
     @SerializedName("Premium")
-    var premium: Premium? = null
+    var premium: Premium? = null,
+
+    var order: Int = 0
 ) {
     fun getActiveCases(): Int {
         val total = totalConfirmed ?: 0
