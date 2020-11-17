@@ -2,149 +2,184 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_case_item_bg">
+
+            <TextView
+                android:id="@+id/tv_cases_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                android:text="..."
+                tools:text="2,100"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/tv_size_country_no"/>
+
+            <TextView
+                android:id="@+id/lb_title_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_below="@+id/tv_cases_active"
+                android:text="Active"
+                android:textColor="@color/text_dark_light"
+                android:textSize="@dimen/tv_size_country_label"/>
+
+            <TextView
+                android:id="@+id/lb_new_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_below="@+id/lb_title_active"
+                tools:text="+1000"
+                android:textColor="@color/active_color"
+                android:textSize="@dimen/tv_size_country_new"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_mini_chart_active"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_case_item_bg">
+
+            <TextView
+                android:id="@+id/tv_cases_recovered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                android:text="..."
+                tools:text="2,100"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/tv_size_country_no"/>
+
+            <TextView
+                android:id="@+id/lb_title_recovered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_below="@+id/tv_cases_recovered"
+                android:text="Recovered"
+                android:textColor="@color/text_dark_light"
+                android:textSize="@dimen/tv_size_country_label"/>
+
+            <TextView
+                android:id="@+id/lb_new_recovered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_below="@+id/lb_title_recovered"
+                tools:text="+1000"
+                android:textColor="@color/recovered_color"
+                android:textSize="@dimen/tv_size_country_new"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_mini_chart_recovered"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_case_item_bg">
+
+            <TextView
+                android:id="@+id/tv_cases_death"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                android:text="..."
+                tools:text="2,100"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/tv_size_country_no"/>
+
+            <TextView
+                android:id="@+id/lb_title_death"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_below="@+id/tv_cases_death"
+                android:text="Death"
+                android:textColor="@color/text_dark_light"
+                android:textSize="@dimen/tv_size_country_label"/>
+
+            <TextView
+                android:id="@+id/lb_new_death"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_below="@+id/lb_title_death"
+                tools:text="+1000"
+                android:textColor="@color/death_color"
+                android:textSize="@dimen/tv_size_country_new"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_mini_chart_death"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/shape_case_item_bg">
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_cases_confirmed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:text="..."
+            tools:text="Total 2,100"
+            android:textColor="@color/text_dark"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_cases_new_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textStyle="bold"
             android:text="..."
-            tools:text="2,100"
-            android:textColor="@color/text_dark"
-            android:textSize="@dimen/tv_size_country_no"/>
-
-        <TextView
-            android:id="@+id/lb_title_confirmed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_below="@+id/tv_cases_confirmed"
-            android:text="Confirmed"
-            android:textColor="@color/text_dark_light"
-            android:textSize="@dimen/tv_size_country_label"/>
-
-        <TextView
-            android:id="@+id/lb_new_confirmed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_below="@+id/lb_title_confirmed"
-            tools:text="+1000"
+            tools:text="+200"
             android:textColor="@color/confirmed_color"
-            android:textSize="@dimen/tv_size_country_new"/>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_mini_chart_confirmed"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/shape_case_item_bg">
-
-        <TextView
-            android:id="@+id/tv_cases_recovered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textStyle="bold"
-            android:text="..."
-            tools:text="2,100"
-            android:textColor="@color/text_dark"
-            android:textSize="@dimen/tv_size_country_no"/>
-
-        <TextView
-            android:id="@+id/lb_title_recovered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_below="@+id/tv_cases_recovered"
-            android:text="Recovered"
-            android:textColor="@color/text_dark_light"
-            android:textSize="@dimen/tv_size_country_label"/>
-
-        <TextView
-            android:id="@+id/lb_new_recovered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_below="@+id/lb_title_recovered"
-            tools:text="+1000"
-            android:textColor="@color/recovered_color"
-            android:textSize="@dimen/tv_size_country_new"/>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_mini_chart_recovered"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/shape_case_item_bg">
-
-        <TextView
-            android:id="@+id/tv_cases_death"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textStyle="bold"
-            android:text="..."
-            tools:text="2,100"
-            android:textColor="@color/text_dark"
-            android:textSize="@dimen/tv_size_country_no"/>
-
-        <TextView
-            android:id="@+id/lb_title_death"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_below="@+id/tv_cases_death"
-            android:text="Death"
-            android:textColor="@color/text_dark_light"
-            android:textSize="@dimen/tv_size_country_label"/>
-
-        <TextView
-            android:id="@+id/lb_new_death"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_below="@+id/lb_title_death"
-            tools:text="+1000"
-            android:textColor="@color/death_color"
-            android:textSize="@dimen/tv_size_country_new"/>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_mini_chart_death"/>
-    </RelativeLayout>
+            android:textSize="16sp"/>
+    </LinearLayout>
 </LinearLayout>
+

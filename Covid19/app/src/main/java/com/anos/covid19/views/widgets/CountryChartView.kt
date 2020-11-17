@@ -11,12 +11,12 @@ import com.anos.covid19.model.CountryStatus
 import com.anos.covid19.model.DataInDay
 import com.anos.covid19.utils.AppConst
 import com.anos.covid19.utils.getDaysAgo
+import com.anos.covid19.utils.getUpdatedDateString
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import kotlinx.android.synthetic.main.layout_country_chart_view.view.*
 import timber.log.Timber
 import java.util.*
@@ -25,14 +25,20 @@ import kotlin.collections.ArrayList
 
 class CountryChartView : RelativeLayout {
 
+    interface ICountryViewListener {
+        fun onChartDateChange(fromDate: Date, toDate: Date)
+    }
+
     enum class Period(val days: Int) {
         SEVEN(7),
-        THIRTY(30),
-        ALL(0),
+        A_MONTH(30),
+        SIX_MONTH(180),
+        ALL(365),
         CUSTOM(-1)
     }
 
     private var statusLst: List<CountryStatus>? = null
+    var listener: ICountryViewListener? = null
 
     private lateinit var period: Period
     lateinit var fromDate: Date
@@ -60,7 +66,51 @@ class CountryChartView : RelativeLayout {
         fromDate = getDaysAgo(period.days)
         toDate = getDaysAgo(1)
 
+        updatePeriodTime()
+
         initChartLayout()
+
+        tv_7_days.setOnClickListener {
+            fromDate = getDaysAgo(Period.SEVEN.days)
+            tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
+            tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            reloadData()
+        }
+        tv_30_days.setOnClickListener {
+            fromDate = getDaysAgo(Period.A_MONTH.days)
+            tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
+            tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            reloadData()
+        }
+        tv_180_days.setOnClickListener {
+            fromDate = getDaysAgo(Period.SIX_MONTH.days)
+            tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
+            tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            reloadData()
+        }
+        tv_all.setOnClickListener {
+            fromDate = getDaysAgo(Period.ALL.days)
+            tv_7_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_30_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_180_days.setBackgroundResource(R.drawable.shape_chart_period_btn)
+            tv_all.setBackgroundResource(R.drawable.shape_chart_period_btn_selected)
+            reloadData()
+        }
+    }
+
+    private fun reloadData() {
+        listener?.onChartDateChange(fromDate, toDate)
+        updatePeriodTime()
+    }
+
+    private fun updatePeriodTime() {
+        tv_time?.text = "${getUpdatedDateString(fromDate)} - ${getUpdatedDateString(toDate)}"
     }
 
     /**
@@ -81,14 +131,10 @@ class CountryChartView : RelativeLayout {
         chart.setDrawGridBackground(false)
         chart.isHighlightPerDragEnabled = true
 
-        // set an alternative background color
-        chart.setBackgroundColor(Color.LTGRAY)
-
         chart.animateX(1500)
 
         // get the legend (only possible after setting data)
         val l = chart.legend
-
         // modify the legend ...
         l.form = Legend.LegendForm.LINE
         l.textSize = 10f
@@ -98,7 +144,6 @@ class CountryChartView : RelativeLayout {
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.HORIZONTAL
-
 
         val xAxis = chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -118,29 +163,18 @@ class CountryChartView : RelativeLayout {
         rightAxis.setDrawGridLines(false)
     }
 
-    private fun createDataSet(dataSetIndex: Int, status: String, lstData: List<DataInDay>): LineDataSet {
-        val entries = ArrayList<Entry>()
-        val cal = Calendar.getInstance()
+    private fun createDataSet(dataSetIndex: Int, status: String, lstData: List<DataInDay>): BarDataSet {
+        val entries = ArrayList<BarEntry>()
         for (i in lstData.indices) {
             val data = lstData[i]
-            cal.time = data.date ?: Date()
             val y = data.value?.toFloat() ?: 0f
-            entries.add(Entry(i.toFloat(), y))
-            Timber.e("======= ${i?.toFloat()}")
+            entries.add(BarEntry(i.toFloat(), y))
         }
         // create a dataset and give it a type
-        val dataSet = LineDataSet(entries, "DataSet $dataSetIndex")
+        val dataSet = BarDataSet(entries, "DataSet $dataSetIndex")
         dataSet.setDrawIcons(false)
-        //dataSet.axisDependency = YAxis.AxisDependency.LEFT
         dataSet.color = getStatusColor(status)
-        // circle
-        /*dataSet.setCircleColor(Color.WHITE)
-        dataSet.setDrawCircleHole(false)
-        dataSet.circleRadius = 2f*/
-        dataSet.setDrawCircles(false)
-
         dataSet.setDrawValues(false)
-        dataSet.lineWidth = 2f
 
         return dataSet
     }
@@ -148,6 +182,7 @@ class CountryChartView : RelativeLayout {
     private fun getStatusColor(status: String): Int {
         return when (status) {
             AppConst.Status.CONFIRMED -> resources.getColor(R.color.confirmed_color)
+            AppConst.Status.ACTIVE -> resources.getColor(R.color.active_color)
             AppConst.Status.RECOVERED -> resources.getColor(R.color.recovered_color)
             AppConst.Status.DEATH -> resources.getColor(R.color.death_color)
             else -> resources.getColor(R.color.colorPrimary)
@@ -160,33 +195,27 @@ class CountryChartView : RelativeLayout {
     fun update(lstStatus: List<CountryStatus>) {
         Timber.e("update >> ${lstStatus.size}")
         // filter data again
-        statusLst = lstStatus.sortedWith(compareBy { it.date })/*.filter {
-            it.date?.after(fromDate) ?: kotlin.run {
-                false
-            } && it.date?.before(toDate) ?: kotlin.run {
-                false
-            }
-        }*/
-        val confirmedLst = ArrayList<DataInDay>()
+        statusLst = lstStatus.sortedWith(compareBy { it.date })
+        val activeLst = ArrayList<DataInDay>()
         val recoveredLst = ArrayList<DataInDay>()
         val deathLst = ArrayList<DataInDay>()
         statusLst?.forEach {
-            confirmedLst.add(DataInDay(it.date, it.confirmed))
+            activeLst.add(DataInDay(it.date, it.active))
             recoveredLst.add(DataInDay(it.date, it.recovered))
             deathLst.add(DataInDay(it.date, it.deaths))
         }
-        val dataSet0 = createDataSet(0, AppConst.Status.CONFIRMED, confirmedLst)
+        val dataSet0 = createDataSet(0, AppConst.Status.ACTIVE, activeLst)
         val dataSet1 = createDataSet(1, AppConst.Status.RECOVERED, recoveredLst)
         val dataSet2 = createDataSet(2, AppConst.Status.DEATH, deathLst)
 
         // create a data object with dataset
-        chart.data = LineData(dataSet0, dataSet1, dataSet2)
+        chart.data = BarData(dataSet0, dataSet1, dataSet2)
 
-        val xAxisFormatter: IAxisValueFormatter = DayAxisValueFormatter(chart, statusLst!!)
+        /*val xAxisFormatter: IAxisValueFormatter = DayAxisValueFormatter(chart, statusLst!!)
         val xAxis = chart.xAxis
-        xAxis.valueFormatter = xAxisFormatter
+        xAxis.valueFormatter = xAxisFormatter*/
 
-        // redraw
+        chart.setFitBars(true)
         chart.invalidate()
     }
 }

@@ -35,6 +35,7 @@ object AppConst {
 
     object Status {
         const val CONFIRMED = "confirmed"
+        const val ACTIVE = "active"
         const val RECOVERED = "recovered"
         const val DEATH = "deaths"
     }

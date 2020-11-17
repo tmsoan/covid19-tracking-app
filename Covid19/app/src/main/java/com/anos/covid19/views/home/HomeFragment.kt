@@ -14,7 +14,9 @@ import com.anos.covid19.viewmodel.DataViewModel
 import com.anos.covid19.views.MainActivity
 import com.anos.covid19.views.base.BaseFragment
 import com.anos.covid19.views.country.CountrySearchBottomSheet
+import com.anos.covid19.views.widgets.CountryChartView
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
 
 class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCallback {
 
@@ -38,7 +40,8 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     override fun initLayout() {
         swipe_container.setOnRefreshListener(onSwipeRefreshListener)
         swipe_container.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
-        ln_country_name.setOnClickListener(onCountryNameClicked)
+        tv_country_name.setOnClickListener(onCountryNameClicked)
+        countryChartView.listener = onCountryViewCallback
     }
 
     private fun initData() {
@@ -149,8 +152,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
 
         // reload chart data
         countryChartView?.let {
-            requireLoading = loading
-            dataViewModel.getCountryTotalAllStatus(selectedCountrySlug, it.fromDate, it.toDate)
+            loadCountryTotalAllStatus(loading, it.fromDate, it.toDate)
         }
     }
 
@@ -170,6 +172,11 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
 
     private fun fetchNeededData() {
         //dataViewModel.getCountries(false)
+    }
+
+    private fun loadCountryTotalAllStatus(loading: Boolean, fromDate: Date, toDate: Date) {
+        requireLoading = loading
+        dataViewModel.getCountryTotalAllStatus(selectedCountrySlug, fromDate, toDate)
     }
 
     /**
@@ -197,6 +204,12 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
                 updateCountryView(true, it)
                 return@forEach
             }
+        }
+    }
+
+    private val onCountryViewCallback = object : CountryChartView.ICountryViewListener {
+        override fun onChartDateChange(fromDate: Date, toDate: Date) {
+            loadCountryTotalAllStatus(true, fromDate, toDate)
         }
     }
 }

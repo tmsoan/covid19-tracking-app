@@ -34,8 +34,11 @@ class CountryCasesView : LinearLayout {
 
     fun update(country: Country) {
         country.totalConfirmed?.let {
-            tv_cases_confirmed?.setText(getIntThousandFormat(it))
+            tv_cases_confirmed?.setText("Total ${getIntThousandFormat(it)}")
         }
+
+        tv_cases_active?.text = getIntThousandFormat(country.getActiveCases())
+
         country.totalRecovered?.let {
             tv_cases_recovered?.setText(getIntThousandFormat(it))
         }
@@ -43,13 +46,12 @@ class CountryCasesView : LinearLayout {
             tv_cases_death?.setText(getIntThousandFormat(it))
         }
 
-        // new cases
-        country.newConfirmed?.let {
-            lb_new_confirmed?.setText(getNewCaseLabel(it))
-        } ?: kotlin.run {
-            lb_new_confirmed?.text = ""
-        }
 
+        country.newConfirmed?.let {
+            tv_cases_new_confirmed?.setText(getNewCaseLabel(it))
+        } ?: kotlin.run {
+            tv_cases_new_confirmed?.text = ""
+        }
         country.newRecovered?.let {
             lb_new_recovered?.setText(getNewCaseLabel(it))
         } ?: kotlin.run {

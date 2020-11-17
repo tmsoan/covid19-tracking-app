@@ -129,23 +129,17 @@
 
             </RelativeLayout>
 
-            <LinearLayout
+            <com.anos.covid19.views.widgets.CountryCasesView
+                android:id="@+id/countryCaseView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/padding_standard">
+                android:layout_marginTop="8dp"/>
 
-                <com.anos.covid19.views.widgets.CountryCasesView
-                    android:id="@+id/countryCaseView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <com.anos.covid19.views.widgets.CountryChartView
-                    android:id="@+id/countryChartView"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            <com.anos.covid19.views.widgets.CountryChartView
+                android:id="@+id/countryChartView"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -24,22 +24,36 @@
             android:text="30 Days"/>
 
         <TextView
+            android:id="@+id/tv_180_days"
+            style="@style/ChartSelectPeriod"
+            android:text="6 Months"/>
+
+        <TextView
             android:id="@+id/tv_all"
             style="@style/ChartSelectPeriod"
-            android:text="All"/>
+            android:text="1 Year"/>
 
         <TextView
             android:id="@+id/tv_custom"
             style="@style/ChartSelectPeriod"
+            android:visibility="gone"
             android:text="Custom"/>
     </LinearLayout>
 
 
-    <com.github.mikephil.charting.charts.LineChart
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_below="@+id/ln_options"
-        android:layout_marginTop="8dp" />
+        android:layout_below="@+id/ln_options" />
 
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chart"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/text_dark"
+        tools:text="10/11/2020 - 17/11/2020"/>
 </RelativeLayout>
