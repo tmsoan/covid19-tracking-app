@@ -23,7 +23,7 @@ android {
 
     signingConfigs {
         release {
-            keyAlias ''
+            keyAlias 'covid19diag'
             keyPassword 'covid19202@!'
             storeFile file('../keystore/keystore.jks')
             storePassword 'covid19202@!'
@@ -130,6 +130,11 @@ dependencies {
     // rx
     implementation deps.rx.rxandroid
     implementation deps.rx.rxjava2
+
+    // room database
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+    implementation deps.room.ktx
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"

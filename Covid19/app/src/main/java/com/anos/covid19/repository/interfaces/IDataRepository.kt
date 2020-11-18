@@ -37,7 +37,7 @@ interface IDataRepository {
     }
 
 
-    suspend fun getSummary(callback: SummaryCallback)
+    suspend fun getSummary(refresh: Boolean, callback: SummaryCallback)
 
     suspend fun getCountries(callback: CountriesCallback)
 

@@ -12,6 +12,7 @@ import com.anos.covid19.eventbus.EventStore
 import com.anos.covid19.helper.AppConfig
 import com.anos.covid19.utils.hasNetworkConnected
 import com.anos.covid19.di.IAppComponent
+import com.anos.covid19.helper.SimpleCacheManager
 import com.app.javlininvest.helper.ConnectionStateMonitor
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,6 +49,7 @@ class MyApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
         registerNetworkReceiver()
+        SimpleCacheManager.getInstance(this)
     }
 
     override fun onLowMemory() {

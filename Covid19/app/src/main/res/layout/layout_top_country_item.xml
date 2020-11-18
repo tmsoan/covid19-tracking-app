@@ -63,7 +63,7 @@
             android:layout_height="21dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"/>
+            android:src="@drawable/ic_baseline_arrow_right"/>
     </LinearLayout>
 
     <View

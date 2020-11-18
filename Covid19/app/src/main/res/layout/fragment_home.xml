@@ -31,7 +31,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="-4dp"
                 android:textSize="36sp"
                 android:textColor="@color/text_dark"
@@ -79,7 +78,7 @@
                 android:layout_gravity="center_vertical" />
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/header_margin">
@@ -88,50 +87,54 @@
                     android:id="@+id/v_left_2"
                     android:layout_width="6dp"
                     android:layout_height="24dp"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/shape_header_li" />
 
                 <LinearLayout
-                    android:id="@+id/ln_country_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="8dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/v_left_2"
-                    android:layout_toLeftOf="@+id/btn_view_details">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tv_country_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="32dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
                         android:textSize="@dimen/header_size"
                         android:textColor="@color/text_dark"
-                        android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:textStyle="bold"
-                        tools:text="Vietnam"
-                        android:drawableRight="@drawable/ic_arrow_drop_down"/>
+                        tools:text="Vietnam s "
+                        android:drawableRight="@drawable/ic_drop_down_36"/>
 
+                    <View
+                        android:id="@+id/v_tmp"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btn_view_details"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
                     android:paddingStart="8dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
                     android:textSize="12sp"
                     android:textColor="@color/background_color"
                     android:text="View Details"
                     android:textAllCaps="false"
                     android:background="@drawable/label_standard_selector"
                     android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"/>
-
-            </RelativeLayout>
+            </LinearLayout>
 
             <com.anos.covid19.views.widgets.CountryCasesView
                 android:id="@+id/countryCaseView"

@@ -1,6 +1,7 @@
 package com.anos.covid19.repository
 
 import com.anos.covid19.MyApp
+import com.anos.covid19.helper.SimpleCacheManager
 import com.anos.covid19.model.CountryItem
 import com.anos.covid19.model.CountryStatus
 import com.anos.covid19.model.CountryTotalStatus
@@ -23,11 +24,19 @@ class DataRepository : BaseRepository(), IDataRepository {
     @Inject
     lateinit var api: IAppAPI
 
-    override suspend fun getSummary(callback: IDataRepository.SummaryCallback) {
+    override suspend fun getSummary(refresh: Boolean, callback: IDataRepository.SummaryCallback) {
+        // check in cache first
+        if (!refresh) {
+            SimpleCacheManager.getInstance(MyApp.instance).summaryResponse?.let {
+                callback.onSummaryLoaded(DataResponse.create(it))
+                return
+            }
+        }
         api.getSummary().enqueue(object : Callback<SummaryResponse> {
             override fun onResponse(call: Call<SummaryResponse>, response: Response<SummaryResponse>) {
                 val dataResponse = DataResponse.create(response)
                 callback.onSummaryLoaded(dataResponse)
+                SimpleCacheManager.getInstance(MyApp.instance).summaryResponse = response
             }
 
             override fun onFailure(call: Call<SummaryResponse>, t: Throwable) {

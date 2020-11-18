@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
         handleLoadCountries()
         handleCountryTotalAllStatus()
 
-        fetchSummaryData()
+        fetchSummaryData(false)
         fetchNeededData()
     }
 
@@ -76,7 +76,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     }
 
     private val onSwipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
-        fetchSummaryData()
+        fetchSummaryData(true)
     }
 
     private fun handleLoading() {
@@ -183,8 +183,8 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     /**
      * start loading Summary
      */
-    private fun fetchSummaryData() {
-        dataViewModel.getSummary()
+    private fun fetchSummaryData(refresh: Boolean) {
+        dataViewModel.getSummary(refresh)
     }
 
     private fun fetchNeededData() {

@@ -77,10 +77,10 @@ class DataViewModel : BaseViewModel() {
      * fetch new Summary data,
      * and update the result into the livedata object to display UI
      */
-    fun getSummary() {
+    fun getSummary(refresh: Boolean) {
         viewModelScope.launch {
             _loading.postValue(true)
-            dataRepository.getSummary(object : IDataRepository.SummaryCallback {
+            dataRepository.getSummary(refresh, object : IDataRepository.SummaryCallback {
                 override fun onSummaryLoaded(dataResponse: DataResponse<SummaryResponse>) {
                     if (dataResponse is DataSuccessResponse) {
                         summaryResult = dataResponse.body
