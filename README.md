@@ -26,13 +26,60 @@ Step-2 : Sync project's gradle and clearn the project
 Step-3 : Compile & Run the project on Android 7.0++
 
 ## App Demo
-<img src="Covid19/images/home-0.jpg">
-<img src="Covid19/images/home-1.jpg">
-<img src="Covid19/images/top.jpg">
-<img src="Covid19/images/details-0.jpg">
-<img src="Covid19/images/details-1.jpg">
-<img src="Covid19/images/search.jpg">
-<img src="Covid19/images/share-content.jpg">
+<table>
+  <tr>
+    <td align="center">
+      Home Screen - Global</br>
+      <img src="Covid19/images/home-0.jpg" width="200px" height="411px">
+    </td>
+    <td align="center">
+      Home Screen - Selected Country</br>
+      <img src="Covid19/images/home-1.jpg" width="200px" height="411px">
+    </td>
+    <td align="center">
+      Home Screen - Top 50 Countries</br>
+      <img src="Covid19/images/top.jpg" width="200px" height="411px">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      Country Details Screen - Top</br>
+      <img src="Covid19/images/details-0.jpg" width="200px" height="411px">
+    </td>
+    <td align="center">
+      Country Details Screen - Filter</br>
+      <img src="Covid19/images/details-1.jpg" width="200px" height="411px">
+    </td>
+    <td align="center">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      Search Screen</br>
+      <img src="Covid19/images/search.jpg" width="200px" height="411px">
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      Share Long Content as an image</br>
+      <img src="Covid19/images/share-content.jpg" width="200px" height="757px">
+    </td>
+    <td align="center">
+      Share Short Content as an image</br>
+      <img src="Covid19/images/share-1.jpg" width="200px" height="757px">
+    </td>
+    <td align="center">
+    </td>
+  </tr>
+
+</table>
 
 ## Library Used
 * [Android Recommended Architecture - MVVM](https://developer.android.com/jetpack/guide#recommended-app-arch)
