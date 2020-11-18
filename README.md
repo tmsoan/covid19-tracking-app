@@ -19,7 +19,7 @@ In this project I am building a Covid-19 Statistics App by using the FREE API da
 * More: view in-app settings <b><= Just an idea. Not implemented yet</b>
 
 ## Setting Up
-Step-1 : Download project at 'master' branch
+Step-1 : Download project at 'stable' branch
 
 Step-2 : Sync project's gradle and clearn the project
 
