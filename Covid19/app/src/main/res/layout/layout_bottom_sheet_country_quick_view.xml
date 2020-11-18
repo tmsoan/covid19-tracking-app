@@ -58,6 +58,7 @@
             android:layout_gravity="center_vertical" />
 
         <Button
+            android:id="@+id/btn_view_details"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="16dp"

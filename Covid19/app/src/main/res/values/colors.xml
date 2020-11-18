@@ -14,6 +14,11 @@
     <color name="death_color">#F44336</color>
     <color name="recovered_color">#4CAF50</color>
 
+    <color name="confirmed_color_chart">#D80057FF</color>
+    <color name="active_color_chart">#D8FFC107</color>
+    <color name="death_color_chart">#D8F44336</color>
+    <color name="recovered_color_chart">#E44CAF50</color>
+
 
     <array name="pieChartColors">
         <item>@color/confirmed_color</item>

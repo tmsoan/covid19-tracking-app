@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_marginTop="4dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ln_view"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="#9AD6D6D6"
+        android:layout_height="44dp">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Date"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:textSize="14sp"/>
+
+        <include layout="@layout/veritical_line" />
+
+        <TextView
+            android:id="@+id/tv_confirmed"
+            android:layout_width="0dp"
+            android:layout_weight="0.22"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Confirmed"
+            android:textColor="@color/text_dark"
+            android:textStyle="bold"
+            android:textSize="13sp"/>
+
+        <include layout="@layout/veritical_line" />
+
+        <TextView
+            android:id="@+id/tv_active"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Active"
+            android:textColor="@color/text_dark"
+            android:textStyle="bold"
+            android:textSize="13sp"/>
+
+        <include layout="@layout/veritical_line" />
+
+        <TextView
+            android:id="@+id/tv_recovered"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Recovered"
+            android:textColor="@color/text_dark"
+            android:textStyle="bold"
+            android:textSize="13sp"/>
+
+        <include layout="@layout/veritical_line" />
+
+        <TextView
+            android:id="@+id/tv_death"
+            android:layout_width="0dp"
+            android:layout_weight="0.17"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Deaths"
+            android:textColor="@color/text_dark"
+            android:textStyle="bold"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:layout_above="@+id/ln_view"
+        android:background="#FFB1B7BC"
+        android:alpha="0.6" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:layout_below="@+id/ln_view"
+        android:background="#FFB1B7BC"
+        android:alpha="0.6"/>
+</RelativeLayout>
+

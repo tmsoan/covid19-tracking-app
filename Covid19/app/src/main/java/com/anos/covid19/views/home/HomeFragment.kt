@@ -7,7 +7,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anos.covid19.R
 import com.anos.covid19.model.Country
 import com.anos.covid19.model.ScreenEventObject
-import com.anos.covid19.utils.AppConst
 import com.anos.covid19.utils.DialogUtil
 import com.anos.covid19.utils.getUpdatedDateString
 import com.anos.covid19.utils.obtainViewModel
@@ -17,6 +16,7 @@ import com.anos.covid19.views.base.BaseFragment
 import com.anos.covid19.views.country.AllCountriesFragment
 import com.anos.covid19.views.country.CountryQuickViewBottomSheet
 import com.anos.covid19.views.country.CountrySearchBottomSheet
+import com.anos.covid19.views.countrydetail.CountryDetailsActivity
 import com.anos.covid19.views.topcountry.TopCountriesView
 import com.anos.covid19.views.widgets.CountryChartView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -161,6 +161,9 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
         country.date?.let {
             tv_country_updated_date?.text = getUpdatedDateString(it)
         }
+        countryCaseView?.setOnClickListener {
+            openScreen(ScreenEventObject(ScreenEventObject.ScreenType.ACTIVITY, CountryDetailsActivity.NAME, country))
+        }
 
         // reload chart data
         countryChartView?.let {
@@ -227,8 +230,13 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
 
     private val onTopCountryViewCallback = object : TopCountriesView.ICallback {
         override fun onCountryItemClicked(country: Country) {
-            topCountryQuickViewDialog = CountryQuickViewBottomSheet.getInstance(country)
+            topCountryQuickViewDialog = CountryQuickViewBottomSheet.newInstance(country)
             topCountryQuickViewDialog?.show(childFragmentManager, CountryQuickViewBottomSheet::javaClass.name)
+            topCountryQuickViewDialog?.listener = object : CountryQuickViewBottomSheet.ICallback {
+                override fun onViewDetailsClicked(country: Country) {
+                    openScreen(ScreenEventObject(ScreenEventObject.ScreenType.ACTIVITY, CountryDetailsActivity.NAME, country))
+                }
+            }
         }
 
         override fun onViewAllCountriesClicked(countries: List<Country>) {

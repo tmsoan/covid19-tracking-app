@@ -9,6 +9,7 @@ import com.anos.covid19.utils.AppConst
 import com.anos.covid19.utils.AppConst.fragPopTransactionOptions
 import com.anos.covid19.views.base.BaseActivity
 import com.anos.covid19.views.country.AllCountriesFragment
+import com.anos.covid19.views.countrydetail.CountryDetailsActivity
 import com.anos.covid19.views.home.HomeFragment
 import com.anos.covid19.views.maps.MapsFragment2
 import com.anos.covid19.views.more.MoreFragment
@@ -50,6 +51,11 @@ class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
             AllCountriesFragment.NAME -> {
                 val countries = screenEventObject.data as ArrayList<Country>
                 pushFragmentWithFragNav(AllCountriesFragment.getInstance(countries), true)
+            }
+            CountryDetailsActivity.NAME -> {
+                screenEventObject.data?.let {
+                    CountryDetailsActivity.startActivity(this, it as Country)
+                }
             }
         }
     }

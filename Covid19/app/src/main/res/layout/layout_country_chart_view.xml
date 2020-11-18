@@ -7,7 +7,7 @@
     android:background="@color/background_color">
 
     <LinearLayout
-        android:id="@+id/ln_options"
+        android:id="@+id/ln_date_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -40,18 +40,53 @@
             android:text="Custom"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ln_status_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ln_date_options"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_confirmed"
+            style="@style/ChartSelectPeriod"
+            android:text="Confirmed"
+            android:background="@drawable/shape_chart_period_btn_selected"/>
+
+        <TextView
+            android:id="@+id/tv_active"
+            style="@style/ChartSelectPeriod"
+            android:text="Active"
+            android:background="@drawable/shape_chart_period_btn_selected"/>
+
+        <TextView
+            android:id="@+id/tv_recovered"
+            style="@style/ChartSelectPeriod"
+            android:text="Recovered"
+            android:background="@drawable/shape_chart_period_btn_selected"/>
+
+        <TextView
+            android:id="@+id/tv_death"
+            style="@style/ChartSelectPeriod"
+            android:text="Death"
+            android:background="@drawable/shape_chart_period_btn_selected"/>
+
+    </LinearLayout>
+
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_below="@+id/ln_options" />
+        android:layout_below="@+id/ln_status_options" />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/chart"
+        android:layout_marginTop="-8dp"
         android:gravity="center"
         android:textSize="14sp"
         android:textColor="@color/text_dark"

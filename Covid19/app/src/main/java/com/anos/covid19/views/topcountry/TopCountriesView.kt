@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anos.covid19.R
 import com.anos.covid19.model.Country
 import com.anos.covid19.views.country.CountryQuickViewBottomSheet
-import com.anos.covid19.views.country.CountrySearchBottomSheet
 import kotlinx.android.synthetic.main.layout_top_countries_view.view.*
 
 
-class TopCountriesView : LinearLayout, TopCountriesAdapter.Interaction, CountryQuickViewBottomSheet.ICallback {
+class TopCountriesView : LinearLayout, TopCountriesAdapter.Interaction {
 
     interface ICallback {
         fun onCountryItemClicked(country: Country)
@@ -83,4 +82,5 @@ class TopCountriesView : LinearLayout, TopCountriesAdapter.Interaction, CountryQ
             listener?.onViewAllCountriesClicked(it)
         }
     }
+
 }

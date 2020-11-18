@@ -3,6 +3,7 @@ package com.anos.covid19.views.country
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.anos.covid19.R
@@ -17,10 +18,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class CountryQuickViewBottomSheet : BottomSheetDialogFragment() {
 
     interface ICallback {
+        fun onViewDetailsClicked(country: Country)
     }
 
     companion object {
-        fun getInstance(country: Country): CountryQuickViewBottomSheet{
+        fun newInstance(country: Country): CountryQuickViewBottomSheet{
             val fragment = CountryQuickViewBottomSheet()
             val bundle = Bundle()
             bundle.putParcelable("country", country)
@@ -83,6 +85,12 @@ class CountryQuickViewBottomSheet : BottomSheetDialogFragment() {
     private fun initLayout(bottomSheet: BottomSheetDialog) {
         bottomSheet.findViewById<ImageView>(R.id.btn_close)?.setOnClickListener {
             dismiss()
+        }
+        bottomSheet.findViewById<Button>(R.id.btn_view_details)?.setOnClickListener {
+            country?.let {
+                dismiss()
+                listener?.onViewDetailsClicked(it)
+            }
         }
         bottomSheet.findViewById<TextView>(R.id.tv_country_name)?.text = country?.country
         countryCasesView = bottomSheet.findViewById(R.id.countryCasesView)
