@@ -3,14 +3,18 @@ package com.anos.covid19.views
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.anos.covid19.R
+import com.anos.covid19.eventbus.EventKey
+import com.anos.covid19.eventbus.event.EventAction
 import com.anos.covid19.model.Country
 import com.anos.covid19.model.ScreenEventObject
 import com.anos.covid19.utils.AppConst
 import com.anos.covid19.utils.AppConst.fragPopTransactionOptions
+import com.anos.covid19.utils.DialogUtil
 import com.anos.covid19.views.base.BaseActivity
 import com.anos.covid19.views.country.AllCountriesFragment
 import com.anos.covid19.views.countrydetail.CountryDetailsActivity
 import com.anos.covid19.views.home.HomeFragment
+import com.anos.covid19.views.maps.MapsFragment
 import com.anos.covid19.views.maps.MapsFragment2
 import com.anos.covid19.views.more.MoreFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,6 +24,9 @@ import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
@@ -28,7 +35,7 @@ class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
     private val fragNavController = FragNavController(supportFragmentManager, R.id.main_container)
     private val fragments = listOf(
             HomeFragment.newInstance(),
-            MapsFragment2.newInstance(),
+            MapsFragment.newInstance(),
             MoreFragment.newInstance()
     )
 
@@ -38,6 +45,16 @@ class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
         super.onCreate(savedInstanceState)
         setupBottomBar()
         setupFragmentNavController(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onBackPressed() {
@@ -56,6 +73,15 @@ class MainActivity : BaseActivity(), FragNavController.RootFragmentListener,
                 screenEventObject.data?.let {
                     CountryDetailsActivity.startActivity(this, it as Country)
                 }
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventAction(eventAction: EventAction) {
+        when (eventAction.key) {
+            EventKey.NETWORK_DISCONNECTED -> {
+                showMyDialog(getString(R.string.app_name), "No Internet connection", DialogUtil.Style.SINGLE_OK, null)
             }
         }
     }

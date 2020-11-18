@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:text="Forgot Password screen" />
+        android:text="This is not implemented yet"
+        android:textSize="20sp" />
 
 </FrameLayout>
