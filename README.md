@@ -86,4 +86,8 @@ Step-3 : Compile & Run the project on Android 7.0++
 * [Live Data](https://developer.android.com/topic/libraries/architecture/livedata)
 * [Retrofit](https://square.github.io/retrofit/)
 * [Covid-19 API](https://documenter.getpostman.com/view/10808728/SzS8rjbc)
-* [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)# covid19-tracking-app
+* [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+
+# Author
+* [GitHub](https://github.com/tmsoan)
+* [Linkedin](https://www.linkedin.com/in/soantrinh/)
