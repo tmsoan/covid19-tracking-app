@@ -73,7 +73,7 @@ Step-3 : Compile & Run the project on Android 7.0++
     </td>
     <td align="center">
       Share Short Content as an image</br>
-      <img src="Covid19/images/share-1.jpg" width="200px" height="757px">
+      <img src="Covid19/images/share-1.jpg" width="200px" height="173px">
     </td>
     <td align="center">
     </td>
