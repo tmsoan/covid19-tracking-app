@@ -26,13 +26,13 @@ Step-2 : Sync project's gradle and clearn the project
 Step-3 : Compile & Run the project on Android 7.0++
 
 ## App Demo
-<img src="images/home-0.jpg">
-<img src="images/home-1.jpg">
-<img src="images/top.jpg">
-<img src="images/details-0.jpg">
-<img src="images/details-1.jpg">
-<img src="images/search.jpg">
-<img src="images/share-content.jpg">
+<img src="Covid19/images/home-0.jpg">
+<img src="Covid19/images/home-1.jpg">
+<img src="Covid19/images/top.jpg">
+<img src="Covid19/images/details-0.jpg">
+<img src="Covid19/images/details-1.jpg">
+<img src="Covid19/images/search.jpg">
+<img src="Covid19/images/share-content.jpg">
 
 ## Library Used
 * [Android Recommended Architecture - MVVM](https://developer.android.com/jetpack/guide#recommended-app-arch)
