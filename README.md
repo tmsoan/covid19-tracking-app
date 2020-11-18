@@ -19,7 +19,7 @@ In this project we are building a Covid-19 Statistics App by using the FREE API 
 * More: view in-app settings <b><= Just an idea. Not implemented yet</b>
 
 ## Setting Up
-Step-1 : Download project at 'release' branch
+Step-1 : Download project at 'master' branch
 
 Step-2 : Sync project's gradle and clearn the project
 
@@ -89,5 +89,4 @@ Step-3 : Compile & Run the project on Android 7.0++
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 
 # Author
-* [GitHub](https://github.com/tmsoan)
 * [Linkedin](https://www.linkedin.com/in/soantrinh/)
