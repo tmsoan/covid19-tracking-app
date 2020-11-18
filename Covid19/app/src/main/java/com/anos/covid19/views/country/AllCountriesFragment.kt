@@ -7,7 +7,9 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anos.covid19.R
 import com.anos.covid19.model.Country
+import com.anos.covid19.model.ScreenEventObject
 import com.anos.covid19.views.base.BaseFragment
+import com.anos.covid19.views.countrydetail.CountryDetailsActivity
 import kotlinx.android.synthetic.main.fragment_all_country.*
 
 class AllCountriesFragment : BaseFragment(), CountriesSearchAdapter.Interaction {
@@ -87,6 +89,11 @@ class AllCountriesFragment : BaseFragment(), CountriesSearchAdapter.Interaction 
     }
 
     override fun onItemSelected(position: Int, code: String) {
-
+        countries?.forEach { item ->
+            if (code == item.countryCode) {
+                openScreen(ScreenEventObject(ScreenEventObject.ScreenType.ACTIVITY, CountryDetailsActivity.NAME, item))
+                return@forEach
+            }
+        }
     }
 }

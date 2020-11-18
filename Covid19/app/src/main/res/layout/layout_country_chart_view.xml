@@ -15,12 +15,12 @@
         <TextView
             android:id="@+id/tv_7_days"
             style="@style/ChartSelectPeriod"
-            android:text="7 Days"
-            android:background="@drawable/shape_chart_period_btn_selected"/>
+            android:text="7 Days"/>
 
         <TextView
             android:id="@+id/tv_30_days"
             style="@style/ChartSelectPeriod"
+            android:background="@drawable/shape_chart_period_btn_selected"
             android:text="30 Days"/>
 
         <TextView

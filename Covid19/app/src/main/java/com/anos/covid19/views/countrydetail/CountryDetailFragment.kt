@@ -1,24 +1,33 @@
 package com.anos.covid19.views.countrydetail
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anos.covid19.MyApp
 import com.anos.covid19.R
 import com.anos.covid19.model.Country
 import com.anos.covid19.model.CountryStatus
 import com.anos.covid19.utils.getDaysAgo
 import com.anos.covid19.utils.getUpdatedDateString
 import com.anos.covid19.utils.obtainViewModel
+import com.anos.covid19.utils.saveImage
 import com.anos.covid19.viewmodel.DataViewModel
 import com.anos.covid19.views.base.BaseFragment
-import com.anos.covid19.views.topcountry.TopCountriesAdapter
 import com.anos.covid19.views.widgets.CountryChartView
 import kotlinx.android.synthetic.main.fragment_country_detail.*
-import kotlinx.android.synthetic.main.layout_top_countries_view.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 
@@ -84,6 +93,7 @@ class CountryDetailFragment : BaseFragment() {
 
     private fun initData() {
         country?.let { c ->
+            tv_header.text = c.country
             countryCasesView.update(c)
         }
 
@@ -120,7 +130,7 @@ class CountryDetailFragment : BaseFragment() {
     }
 
     private fun updateAllCasesList(statusList: List<CountryStatus>) {
-        filteredCountriesAdapter?.update(statusList)
+        filteredCountriesAdapter?.update(statusList.sortedWith(compareByDescending { it.date }))
     }
 
     private val onCountryViewCallback = object : CountryChartView.ICountryViewListener {
@@ -177,5 +187,43 @@ class CountryDetailFragment : BaseFragment() {
 
     private fun performFilterChartAgain() {
         loadCountryTotalAllStatus(countryChartView.fromDate, countryChartView.toDate)
+    }
+
+    fun sharePage() {
+        tv_header?.visibility = View.VISIBLE
+        showLoading()
+        CoroutineScope(Dispatchers.IO).launch {
+            val bitmap: Bitmap = Bitmap.createBitmap(
+                    scrollView.getChildAt(0).width,
+                    scrollView.getChildAt(0).height,
+                    Bitmap.Config.ARGB_8888)
+            val c = Canvas(bitmap)
+            scrollView.getChildAt(0).draw(c)
+
+            val uri = saveImage(MyApp.instance.applicationContext, bitmap)
+            Timber.e("Image saved: ${uri.toString()}")
+            uri?.let {
+                CoroutineScope(Dispatchers.Main).launch {
+                    tv_header?.visibility = View.GONE
+                    hideLoading()
+                    shareImageUri(it)
+                }
+            }
+        }
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun shareImageUri(uri: Uri) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.type = "image/png"
+        val chooser = Intent.createChooser(intent, "Share with...")
+        val resInfoList: List<ResolveInfo> = MyApp.instance.packageManager.queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
+        for (resolveInfo in resInfoList) {
+            val packageName: String = resolveInfo.activityInfo.packageName
+            getCurrentActivity()?.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        getCurrentActivity()?.startActivity(chooser)
     }
 }

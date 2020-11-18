@@ -32,6 +32,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     private var topCountryQuickViewDialog: CountryQuickViewBottomSheet? = null
     private var countryDialog: CountrySearchBottomSheet? = null
     private var requireLoading = false
+    private var isFirstLoading = true
 
 
 
@@ -81,13 +82,17 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
     private fun handleLoading() {
         dataViewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {
-                if (requireLoading) {
+                if (!it) {
+                    hideLoading()
+                }
+                if (requireLoading || isFirstLoading) {
                     if (it) {
                         showLoading()
                     } else {
                         hideLoading()
                         requireLoading = false
                     }
+                    isFirstLoading = false
                 } else {
                     swipe_container.isRefreshing = it
                 }
@@ -158,10 +163,7 @@ class HomeFragment : BaseFragment(), CountrySearchBottomSheet.ICountrySearchCall
         countryCaseView?.update(country)
         // country name
         tv_country_name?.text = country.country
-        country.date?.let {
-            tv_country_updated_date?.text = getUpdatedDateString(it)
-        }
-        countryCaseView?.setOnClickListener {
+        btn_view_details.setOnClickListener {
             openScreen(ScreenEventObject(ScreenEventObject.ScreenType.ACTIVITY, CountryDetailsActivity.NAME, country))
         }
 

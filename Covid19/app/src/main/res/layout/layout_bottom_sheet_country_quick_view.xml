@@ -1,72 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shape_top_country_quick_view"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="vertical">
+        android:background="@drawable/shape_top_country_quick_view">
+
+        <LinearLayout
+            android:id="@+id/ln_main_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_top_country_quick_view"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="8dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:id="@+id/tv_country_name"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_dark"
+                    tools:text="Viet Nam" />
+
+                <ImageView
+                    android:id="@+id/btn_close"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_baseline_close_24" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="#FFB1B7BC"
+                android:alpha="0.7" />
+
+            <com.anos.covid19.views.widgets.CircleChartCasesView
+                android:id="@+id/countryCasesView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginTop="@dimen/padding_standard"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:padding="8dp"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_gravity="center_vertical"
-                android:visibility="invisible"/>
-
-            <TextView
-                android:id="@+id/tv_country_name"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/text_dark"
-                tools:text="Viet Nam" />
-
-            <ImageView
-                android:id="@+id/btn_close"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:padding="8dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_baseline_close_24" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:background="#FFB1B7BC"
-            android:alpha="0.7" />
-
-        <com.anos.covid19.views.widgets.CircleChartCasesView
-            android:id="@+id/countryCasesView"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:layout_marginTop="@dimen/padding_standard"
-            android:layout_gravity="center_vertical" />
+            android:layout_below="@+id/ln_main_view"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_view_details"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/btn_standard_selector"
-            android:text="View Detail"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:textColor="@color/background_color"/>
-    </LinearLayout>
-</FrameLayout>
+            <ImageView
+                android:id="@+id/btn_share"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:padding="8dp"
+                android:background="@drawable/btn_grey_selector"
+                android:src="@drawable/ic_baseline_share_blue"/>
+
+            <Button
+                android:id="@+id/btn_view_details"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/btn_standard_selector"
+                android:text="View Detail"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textColor="@color/background_color"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
 

@@ -80,7 +80,7 @@ class CountryChartView : RelativeLayout {
         filterStatusMap[AppConst.Status.DEATH] = true
 
         // default value
-        period = Period.SEVEN
+        period = Period.A_MONTH
         fromDate = getDaysAgo(period.days)
         toDate = getDaysAgo(1)
 

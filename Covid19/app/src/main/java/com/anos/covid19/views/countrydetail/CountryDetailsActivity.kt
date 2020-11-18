@@ -34,10 +34,14 @@ class CountryDetailsActivity : BaseActivity() {
             country = it.getParcelable("country") ?: Country()
         }
 
-        addFragment(R.id.main_container, CountryDetailFragment.newInstance(country), false)
+        val fragment = CountryDetailFragment.newInstance(country)
+        addFragment(R.id.main_container, fragment, false)
 
         imv_back.setOnClickListener {
             onBackPressed()
+        }
+        imv_share.setOnClickListener {
+            fragment.sharePage()
         }
         tv_title.text = country.country
     }
