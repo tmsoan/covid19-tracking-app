@@ -2,7 +2,7 @@
 From the XX Engineering Department we want to improve the current visibility of Covid-19 and for that purpose we want to build a new mobile application using the public API from covid19api (​https://covid19api.com/​).
 
 ## About This Project
-In this project we are building a Covid-19 Statistics App by using the FREE API data from [Covid-19 API](https://documenter.getpostman.com/view/10808728/SzS8rjbc).
+In this project I am building a Covid-19 Statistics App by using the FREE API data from [Covid-19 API](https://documenter.getpostman.com/view/10808728/SzS8rjbc).
 - The user can view the statistics of number of cases in the Global and any country that user can select. 
 - Able to view the statistics data in Chart & Text information. 
 - Able to filter by country, status (confirmed, recovered, active, death) or a range of the time. 
@@ -87,6 +87,12 @@ Step-3 : Compile & Run the project on Android 7.0++
 * [Retrofit](https://square.github.io/retrofit/)
 * [Covid-19 API](https://documenter.getpostman.com/view/10808728/SzS8rjbc)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+
+## Improvement
+* Unit test should be have
+* Data caching:
+  * Reuse data from API for few minutes to reduce APIs called when user refresh/relaunch 
+  * Reuse previous data loaded, and load new data in background at launching time. To improve the UX
 
 # Author
 * [Linkedin](https://www.linkedin.com/in/soantrinh/)
