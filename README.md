@@ -1,4 +1,4 @@
-# Covid-19 Statistics App - Android Tech Test
+# Covid-19 Statistics App - Android
 From the XX Engineering Department we want to improve the current visibility of Covid-19 and for that purpose we want to build a new mobile application using the public API from covid19api (​https://covid19api.com/​).
 
 ## About This Project
