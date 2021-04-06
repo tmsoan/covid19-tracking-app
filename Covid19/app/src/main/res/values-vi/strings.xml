@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Covid19</string>
-    <string name="statistics">Statistics</string>
-    <string name="global_cases">Global Cases</string>
-    <string name="top_countries">Top 50 countries</string>
-    <string name="all_countries">All Countries</string>
-    <string name="today">Today Cases</string>
-    <string name="filter">Customize Filter</string>
+    <string name="app_name">"Ứng dụng C19"</string>
+    <string name="statistics">"Thống kê"</string>
+    <string name="global_cases">"Ca toàn TG"</string>
+    <string name="top_countries">"Nhóm 50 nước"</string>
+    <string name="all_countries">"Tất cả các nước"</string>
+    <string name="today">"Ca hôm nay"</string>
+    <string name="filter">"Customize Filter"</string>
 </resources>
