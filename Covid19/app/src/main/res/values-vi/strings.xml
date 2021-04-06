@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Covid19</string>
+    <string name="statistics">Statistics</string>
+    <string name="global_cases">Global Cases</string>
+    <string name="top_countries">Top 50 countries</string>
+    <string name="all_countries">All Countries</string>
+    <string name="today">Today Cases</string>
+    <string name="filter">Customize Filter</string>
+</resources>
